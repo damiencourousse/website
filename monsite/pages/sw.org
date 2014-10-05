@@ -1,0 +1,9 @@
+Here is the list of my (public) pet projects, or former software projects I
+have contributed to.
+
++ [[http://obnam.org/][obnam]] - a backup program capable of data de-duplication together with
+  client-side encryption
++ [[http://sousmonlit.zincube.net/~niol/playa/oss/projects/lazygal][lazygal]] - a static web gallery generator written in Python
+
+
+TODO update this list.

@@ -1,0 +1,2 @@
+User-agent: *
+Sitemap: http://damien.courouss.fr/sitemap.xml
