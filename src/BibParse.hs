@@ -46,7 +46,7 @@ emptyKeyData = KeyData { key = Nothing
 processCitation :: [Reference] -- ^ the database of biblio references
                 -> KeyData
                 -> String      -- ^ the transformed citation
-processCitation refs k = genCiteMetadata $ union' k keydata
+processCitation refs k = genCiteMetadata $ union [k, keydata]
     where keydata = case parse (parseBibtexNote <* eof) "" keyNote of
             Left err -> emptyKeyData { notes = Just $ show err }
             Right k  -> k
@@ -98,16 +98,16 @@ parseBibtexNote = do
 -- | concatenates all the Just fields found. In case of collision, the latest element has precedence
 -- FIXME à tester
 union :: [KeyData] -> KeyData
-union ks = foldr union' emptyKeyData ks
-
-union' :: KeyData -> KeyData -> KeyData
-union' (KeyData a b c d e f) (KeyData a' b' c' d' e' f') =
-    KeyData (mplus a a')
-            (mplus b b')
-            (mplus c c')
-            (mplus d d')
-            (mplus e e')
-            (mplus f f')
+union ks = foldr step emptyKeyData ks
+  where
+    step :: KeyData -> KeyData -> KeyData
+    step (KeyData a b c d e f) (KeyData a' b' c' d' e' f') =
+        KeyData (mplus a a')
+                (mplus b b')
+                (mplus c c')
+                (mplus d d')
+                (mplus e e')
+                (mplus f f')
 
 parseNoteElement :: Parser KeyData
 parseNoteElement = try parsePaper
