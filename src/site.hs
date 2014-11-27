@@ -17,22 +17,18 @@ main = hakyll $ do
     -- Build tags
     tags <- buildTags "posts/*" (fromCapture "tags/*.html")
 
-    match "images/*" $ do
-        route   idRoute
-        compile copyFileCompiler
-
-    match "media/*" $ do
-        route   idRoute
-        compile copyFileCompiler
+    -- static content
+    mapM_ (flip match (route idRoute >> compile copyFileCompiler))
+          [ "assets/js/*"
+          , "images/*"
+          , "media/*"
+          , "CNAME"
+          ]
 
     match "assets/css/*" $ do
         route   idRoute
         compile compressCssCompiler
 
-    -- Copy static assets
-    match "assets/js/*" $ do
-        route   idRoute
-        compile copyFileCompiler
 
     -- Bibtex entries (for bibliography)
     match "assets/bib/*" $ compile biblioCompiler
