@@ -5,9 +5,7 @@ biblio: main.bib
 csl: ieee.csl
 ---
 
-TODO problème de casse sur les refs biblio.
-
-Selected publications.
+Here is a list of selected publications.
 
 @CC2014
 
