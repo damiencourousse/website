@@ -1,0 +1,77 @@
+---
+title: deploying site sources from hakyll to github.io
+---
+
+All blog posts that explain how to publish your site sources to
+github.io from a Hakyll build suggest to use the =_site= directory as
+a git submodule.
+
+After a few experiments, I came to the conclusion that doing this can
+lead to some troubles.
+
+I detail in this post why, and the workaround I use instead.
+
+Most of the times, you build your site sources with:
+#+BEGIN_EXAMPLE
+cabal run build
+#+END_EXAMPLE
+and all is perfect. The directory =_site= is updated and, in case you
+declared it as a submodule, and furthermore that you took previously
+the precaution no to be on a detached state in this submodule,
+everything is fine and the contents of the submodule are correctly
+updated.
+
+
+Imagine now that you run instead:
+
+#+BEGIN_EXAMPLE
+cabal run rebuild
+#+END_EXAMPLE
+
+
+In this case, you can notice that hakyll first wipes out the
+directories =_cache= and =_site=.  What happens then? git-submodule is
+now wrecked out, and the directory =_site= is considered as a standard
+subdirectory in your source tree instead of a submodule!  Indeed, if
+you go in the directory =_site= and for example run =git remote -v=,
+you will see that =origin= points to the location of you Hakyll source
+tree, not to the location of your =github.io= repository where you
+push the source site files!
+
+Why did it happen? Because the =rebuild= process first involves the
+deletion of the =_site= directory.
+
+Hopefully you can recover from this situation. Go to the Hakyll source
+tree and run:
+#+BEGIN_EXAMPLE
+git submodule udpate --remote
+#+END_EXAMPLE
+
+
+To avoid this problem, it is necessary to use two separate directories
+for =_site= and your submodule directory. Once the Hakyll
+build/rebuild process is done, just copy the files from =_site= into
+your submodule directory (first checkout to the default branch!).
+
+I pushed all of this in a minimalist =Makefile= (my submodule lies in =site=):
+#+BEGIN_EXAMPLE
+.PHONY: build rebuild watch
+build:
+	cabal run $@
+rebuild:
+	cabal run $@
+watch:
+	cabal run $@
+
+push: rebuild
+	git submodule update --remote --merge
+	cd site \
+		&& git checkout master \
+		&& rsync -avr --delete ../_site/* ./ \
+		&& git add . \
+		&& git commit -m 'site update' \
+		&& git push origin master
+	git add site
+	git commit -m 'site update'
+#+END_EXAMPLE
+
