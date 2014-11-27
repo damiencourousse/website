@@ -1,7 +1,8 @@
 ---
 title: generating page contents from org-mode files
 ---
-#+TITLE: generation of html contents from org-mode files
+
+*draft notes* -- should be updated as soon as possible!
 
 The markdown format is nice, but considering that I use extensively
 use [[http://orgmode.org][OrgMode]], I investigated a bit to use org-mode files for generating
