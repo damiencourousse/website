@@ -5,7 +5,6 @@ biblio: main.bib
 csl: ieee.csl
 ---
 
-Here is a list of selected publications.
 
 @CC2014
 
@@ -15,6 +14,8 @@ Here is a list of selected publications.
 
 @COGITO2014:SECRYPT
 
+@Courousse2014:CompilationNice
+
 @Endo2014:SAMOS
 
 @Courousse2013:springer
@@ -23,12 +24,25 @@ Here is a list of selected publications.
 
 @Lhuillier2012:DCE
 
+@Courousse2011:p2012devconf
+
 @Luciani2009
 
 @Luciani2008:cyberworlds
 
+@courousse08:PhDThesis
 
 @courousse07:functionalAnalysis
+
+@courousse07:lexiconCobot
+
+@courousse07:lexiconContactInteraction
+
+@courousse07:lexiconHapticBoard
+
+@courousse07:lexiconMechanicalImpedance
+
+@courousse07:lexiconMotionCapture
 
 @castet07:EI07
 
@@ -41,3 +55,5 @@ Here is a list of selected publications.
 @luciani06:grapp
 
 @courousse05:EI05
+
+@enactive2007:WP3D1
