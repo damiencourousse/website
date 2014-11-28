@@ -1,14 +1,12 @@
 /* TEAM */
-Name: Julien Tanguy
-Site: julien.jhome.fr
-Twitter: @jutanguy
-Location: Nantes, France
+Name: Damien Couroussé
+Site: damien.courousse.fr
+Location: Grenoble, France
 
 /* THANKS */
 Name: Jasper Van der Jeugt (http://jaspervdj.be) for hakyll
-      Idan Gazit (http://gazit.me) for the visual design from gist.io.
 
 /* SITE */
-Last update: 2013-07-02
-Standards: HTML5, CSS3.
+Last update: 2014-11-28
+Standards: HTML5, CSS3
 Software: hakyll, vim
