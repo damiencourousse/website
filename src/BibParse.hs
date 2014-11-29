@@ -100,6 +100,19 @@ parseNoteElement :: Parser KeyData
 parseNoteElement =   try parseLink
                  <|> try parseNotes
 
+-- | extract a link from a note field
+--
+-- >>> parse parseLink  "" "paper=/media/paper_0.pdf"
+-- Right (KeyData {key = Nothing, keyId = Nothing, notes = Nothing, links = [(Ltext "paper",Url "/media/paper_0.pdf")]})
+--
+-- >>> parse parseLink  "" " paper=/media/paper_0.pdf "
+-- Right (KeyData {key = Nothing, keyId = Nothing, notes = Nothing, links = [(Ltext "paper",Url "/media/paper_0.pdf")]})
+--
+-- >>> parse parseLink  "" "a few notes, link=http://url.com"
+-- Right (KeyData {key = Nothing, keyId = Nothing, notes = Nothing, links = [(Ltext "afewnotes,link",Url "http://url.com")]})
+--
+-- >>> parse parseLink  "" "link=http://url.com, a few notes"
+-- Right (KeyData {key = Nothing, keyId = Nothing, notes = Nothing, links = [(Ltext "link",Url "http://url.com")]})
 parseLink :: Parser KeyData
 parseLink  = do
     spaces
@@ -108,12 +121,13 @@ parseLink  = do
     url <- many1 $ noneOf ","
     return $ emptyKeyData { links = [(Ltext $ strip href, Url $ strip url)] }
 
--- |
--- >>> parse parseLink  "" "paper=/media/paper_0.pdf"
--- Right (KeyData {key = Nothing, keyId = Nothing, notes = Nothing, links = [(Ltext "paper",Url "/media/paper_0.pdf")]})
--- >>> parse parseLink  "" " paper=/media/paper_0.pdf "
--- Right (KeyData {key = Nothing, keyId = Nothing, notes = Nothing, links = [(Ltext "paper",Url "/media/paper_0.pdf")]})
-
+-- | extract a sequence of characters terminated by a comma from a note field
+--
+-- >>> parse parseNotes  "" "a few notes"
+-- Right (KeyData {key = Nothing, keyId = Nothing, notes = Just "a few notes", links = []})
+--
+-- >>> parse parseNotes  "" "a few notes, link=http://url.com"
+-- Right (KeyData {key = Nothing, keyId = Nothing, notes = Just "a few notes", links = []})
 parseNotes :: Parser KeyData
 parseNotes = do
     liftM (\x -> emptyKeyData { notes = Just x }) $
