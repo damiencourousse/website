@@ -44,16 +44,15 @@ csl: ieee.csl
 
 @courousse07:lexiconMotionCapture
 
+@enactive2007:WP3D1
+
 @castet07:EI07
 
 @courousse06:tappingHS06
 
 @courousse06:EH
 
-@courousse08:PhDThesis
-
 @luciani06:grapp
 
 @courousse05:EI05
 
-@enactive2007:WP3D1
