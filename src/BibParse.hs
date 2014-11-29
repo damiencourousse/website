@@ -108,6 +108,9 @@ parseNoteElement =   try parseLink
 -- >>> parse parseLink  "" " paper=/media/paper_0.pdf "
 -- Right (KeyData {key = Nothing, keyId = Nothing, notes = Nothing, links = [(Ltext "paper",Url "/media/paper_0.pdf")]})
 --
+-- >>> parse parseLink  "" " link name with spaces =/media/paper_0.pdf "
+-- Right (KeyData {key = Nothing, keyId = Nothing, notes = Nothing, links = [(Ltext "link name with spaces",Url "/media/paper_0.pdf")]})
+--
 -- >>> parse parseLink  "" "a few notes, link=http://url.com"
 -- Right (KeyData {key = Nothing, keyId = Nothing, notes = Nothing, links = [(Ltext "afewnotes,link",Url "http://url.com")]})
 --
@@ -116,7 +119,7 @@ parseNoteElement =   try parseLink
 parseLink :: Parser KeyData
 parseLink  = do
     spaces
-    href <- many1 $ noneOf "=" <* spaces
+    href <- many1 $ noneOf "="
     _ <- string "=" <* spaces
     url <- many1 $ noneOf ","
     return $ emptyKeyData { links = [(Ltext $ strip href, Url $ strip url)] }
