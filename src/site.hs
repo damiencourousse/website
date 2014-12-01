@@ -10,10 +10,17 @@ import Hakyll.Core.Compiler (getResourceString)
 import Text.Pandoc.Options
 
 import BibParse
+import GHC.IO.Encoding
+
 
 --------------------------------------------------------------------------------
 main :: IO ()
-main = hakyll $ do
+main = do
+  setLocaleEncoding utf8
+  setFileSystemEncoding utf8
+  setForeignEncoding utf8
+  hakyll $ do
+
     -- Build tags
     tags <- buildTags "posts/*" (fromCapture "tags/*.html")
 
