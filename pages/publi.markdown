@@ -8,8 +8,6 @@ csl: ieee.csl
 
 @CC2014
 
-@Aracil2013:ICEAC
-
 @Goubier2014:tauC
 
 @COGITO2014:SECRYPT
@@ -19,6 +17,8 @@ csl: ieee.csl
 @Endo2014:SAMOS
 
 @Courousse2013:springer
+
+@Aracil2013:ICEAC
 
 @Courousse2012:lctes
 
