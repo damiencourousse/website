@@ -8,11 +8,11 @@ I am research engineer at CEA LIST in Grenoble.
 
 
 In a nutshell:
-I am interested in embedded software in its large understanding.
-I have a predilection for compilation and runtime code generation for performance and security purposes.
+I am interested in embedded software in its large understanding,
+in particular in compilation and runtime code generation for performance and security purposes.
 
 Past topics:
-Cyber-physical systems dedicated to human-machine interaction (otherwise called `haptic systems`).
+Cyber-physical systems dedicated to human-machine interaction (otherwise called _haptic systems_).
 
 
 
