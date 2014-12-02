@@ -3,6 +3,7 @@ title: publications
 related: research
 biblio: main.bib
 csl: ieee.csl
+date: 2014-12-01
 ---
 
 

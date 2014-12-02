@@ -1,13 +1,15 @@
 --------------------------------------------------------------------------------
 {-# LANGUAGE OverloadedStrings #-}
-import           Data.Monoid (mappend)
-import           Hakyll
-import Control.Monad (liftM)
-import Data.Monoid (mappend, mconcat)
-import Data.Maybe (fromMaybe)
+
 import Control.Applicative ((<$>), liftA2)
+import Control.Monad (liftM)
+import Data.Maybe (fromMaybe)
+import Data.Monoid (mappend, mconcat, (<>))
+import Hakyll
 import Hakyll.Core.Compiler (getResourceString)
+import System.FilePath (takeFileName)
 import Text.Pandoc.Options
+import Text.Pandoc
 
 import BibParse
 import GHC.IO.Encoding
@@ -23,6 +25,14 @@ main = do
 
     -- Build tags
     tags <- buildTags "posts/*" (fromCapture "tags/*.html")
+
+    let collectTags = return $ map (\(t,_) -> Item (tagsMakeId tags t) t) (tagsMap tags)
+        ctx = tagsField "tags" tags <> listField "alltags" context collectTags <> context
+        wopts = defaultHakyllWriterOptions { writerHTMLMathMethod = MathJax "", writerHtml5 = True }
+        -- pandoc = return . writePandocWith wopts . readPandoc
+        template t = loadAndApplyTemplate (fromFilePath $ "templates/" ++ t ++ ".html") ctx
+        myRoute base ext c = route (gsubRoute base (const "") `composeRoutes` setExtension ext) >> compile c
+        myFilter c as = getResourceLBS >>= withItemBody (unixFilterLBS c as)
 
     -- static content
     mapM_ (flip match (route idRoute >> compile copyFileCompiler))
@@ -83,8 +93,38 @@ main = do
         route $ gsubRoute "assets/txt/" (const "")
         compile copyFileCompiler
 
+    create ["atom.xml"] $ route idRoute >> compile (loadAllSnapshots "blog/*" "content" >>= renderAtom feedConfiguration context)
+    create ["rss.xml"] $ route idRoute >> compile (loadAllSnapshots "blog/*" "content" >>= renderRss feedConfiguration context)
+    create ["sitemap.xml"] $ route idRoute >> compile (makeItem "" >>= template "sitemap")
+
+    match "templates/*" $ compile templateCompiler
+
+
+config :: Configuration
+config = defaultConfiguration { ignoreFile = ('#' ==) . head . takeFileName
+                              }
+feedConfiguration :: FeedConfiguration
+feedConfiguration = FeedConfiguration
+                { feedTitle = "Damien Couroussé"
+                , feedDescription = ""
+                , feedAuthorName = "Damien Couroussé"
+                , feedAuthorEmail = "damien.courousse@gmail.com"
+                , feedRoot = "http://damien.courousse.fr" }
+
+context :: Context String
+context = dateField "date" "%A, %e %B %Y"
+        <> dateField "isodate" "%F"
+        <> listField "pages" context (loadAll $ "pages/*")
+        <> listField "posts" context (loadAll $ "posts/*")
+        -- <> listField "pics" context (loadAll $ "static/pics/*.png" .&&. hasVersion "map")
+        <> constField "siteroot" (feedRoot feedConfiguration)
+        <> teaserField "description" "content"
+        <> defaultContext
+
+
 
 -- Auxiliary compilers
+--
 pageCompiler :: Item String -> Compiler (Item String)
 pageCompiler i = loadAndApplyTemplate "templates/default.html" defaultContext i
                >>= relativizeUrls
