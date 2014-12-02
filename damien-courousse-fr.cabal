@@ -13,5 +13,5 @@ executable site
                   , pandoc-citeproc
                   , parsec
                   , MissingH
-  ghc-options:      -threaded
+  ghc-options:      -Wall -threaded
   default-language: Haskell2010
