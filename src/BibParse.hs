@@ -70,13 +70,13 @@ genHrefs (Ltext h, Url u) = "[" ++ h ++ "](" ++ u ++ ") "
 -- Right (KeyData {key = Nothing, keyId = Nothing, notes = Nothing, links = [(Ltext "paper",Url "/media/paper_0.pdf"),(Ltext "poster",Url "/poster.pdf")]})
 parseBibtexNote :: Parser KeyData
 parseBibtexNote = do
-    elems <- parseNoteElement `sepBy` (char ',')
+    elems <- parseNoteElement `sepBy` char ','
     return $ union elems
 
 -- | concatenates all the Just fields found. In case of collision, the latest element has precedence
 -- FIXME à tester
 union :: [KeyData] -> KeyData
-union ks = foldr step emptyKeyData ks
+union = foldr step emptyKeyData
   where
     step :: KeyData -> KeyData -> KeyData
     step (KeyData a b n xs) (KeyData a' b' n' xs') =
@@ -121,9 +121,7 @@ parseLink  = do
 -- >>> parse parseNotes  "" "a few notes, link=http://url.com"
 -- Right (KeyData {key = Nothing, keyId = Nothing, notes = Just "a few notes", links = []})
 parseNotes :: Parser KeyData
-parseNotes = do
-    liftM (\x -> emptyKeyData { notes = Just x }) $
-        many1 $ noneOf ","
+parseNotes = liftM (\x -> emptyKeyData { notes = Just x }) $ many1 $ noneOf ","
 
 parseStr :: Parser String -> String -> String
 parseStr p txt = fromEither $ parse (p <* eof) "" txt
@@ -135,7 +133,7 @@ fromEither e = case e of
 
 
 processCitations :: [Reference] -> String -> String
-processCitations refs body = parseStr (parseCitations $ processCitation refs) body
+processCitations refs = parseStr (parseCitations $ processCitation refs)
 
 -- |
 -- parse a page body, extract bibliographic citations,

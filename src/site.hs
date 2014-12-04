@@ -27,12 +27,8 @@ main = do
         template t = loadAndApplyTemplate (fromFilePath $ "templates/" ++ t ++ ".html") ctx
 
     -- static content
-    mapM_ (flip match (route idRoute >> compile copyFileCompiler))
-          [ "assets/js/*"
-          , "images/*"
-          , "media/*"
-          , "CNAME"
-          ]
+    mapM_ (`match` (route idRoute >> compile copyFileCompiler))
+          [ "assets/js/*", "images/*", "media/*", "CNAME" ]
 
     match "assets/css/*" $ do
         route   idRoute
