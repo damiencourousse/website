@@ -1,14 +1,10 @@
 --------------------------------------------------------------------------------
 {-# LANGUAGE OverloadedStrings #-}
 
-import Control.Applicative ((<$>), liftA2)
 import Control.Monad (liftM)
 import Data.Maybe (fromMaybe)
-import Data.Monoid (mappend, mconcat, (<>))
+import Data.Monoid ((<>), mappend, mconcat)
 import Hakyll
-import Hakyll.Core.Compiler (getResourceString)
-import System.FilePath (takeFileName)
-import Text.Pandoc.Options
 import Text.Pandoc
 
 import BibParse
@@ -28,11 +24,7 @@ main = do
 
     let collectTags = return $ map (\(t,_) -> Item (tagsMakeId tags t) t) (tagsMap tags)
         ctx = tagsField "tags" tags <> listField "alltags" context collectTags <> context
-        wopts = defaultHakyllWriterOptions { writerHTMLMathMethod = MathJax "", writerHtml5 = True }
-        -- pandoc = return . writePandocWith wopts . readPandoc
         template t = loadAndApplyTemplate (fromFilePath $ "templates/" ++ t ++ ".html") ctx
-        myRoute base ext c = route (gsubRoute base (const "") `composeRoutes` setExtension ext) >> compile c
-        myFilter c as = getResourceLBS >>= withItemBody (unixFilterLBS c as)
 
     -- static content
     mapM_ (flip match (route idRoute >> compile copyFileCompiler))
@@ -100,9 +92,6 @@ main = do
     match "templates/*" $ compile templateCompiler
 
 
-config :: Configuration
-config = defaultConfiguration { ignoreFile = ('#' ==) . head . takeFileName
-                              }
 feedConfiguration :: FeedConfiguration
 feedConfiguration = FeedConfiguration
                 { feedTitle = "Damien Couroussé"
@@ -114,8 +103,8 @@ feedConfiguration = FeedConfiguration
 context :: Context String
 context = dateField "date" "%A, %e %B %Y"
         <> dateField "isodate" "%F"
-        <> listField "pages" context (loadAll $ "pages/*")
-        <> listField "posts" context (loadAll $ "posts/*")
+        <> listField "pages" context (loadAll "pages/*")
+        <> listField "posts" context (loadAll "posts/*")
         -- <> listField "pics" context (loadAll $ "static/pics/*.png" .&&. hasVersion "map")
         <> constField "siteroot" (feedRoot feedConfiguration)
         <> teaserField "description" "content"
@@ -124,11 +113,6 @@ context = dateField "date" "%A, %e %B %Y"
 
 
 -- Auxiliary compilers
---
-pageCompiler :: Item String -> Compiler (Item String)
-pageCompiler i = loadAndApplyTemplate "templates/default.html" defaultContext i
-               >>= relativizeUrls
-
 bibtexCompiler :: String -> String -> Compiler (Item String)
 bibtexCompiler cslFileName bibFileName = do 
     -- TODO System.FilePath.Posix (</>) :: FilePath -> FilePath -> FilePath

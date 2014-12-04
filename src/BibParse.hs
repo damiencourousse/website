@@ -1,31 +1,14 @@
 module BibParse
-    (
-      processCitations
-    )
+    ( processCitations )
     where
 
-import Data.String.Utils (strip)
 import Control.Applicative ((<*))
-import Data.List (intersperse)
+import Control.Monad (liftM, liftM2, mplus)
+import Data.Maybe (fromMaybe)
+import Data.String.Utils (strip)
+import Text.CSL hiding (processCitations)
 import Text.Parsec
 import Text.Parsec.String (Parser)
-
-import Text.CSL hiding (processCitations)
-import Text.CSL.Reference (Reference)
-import Text.CSL.Input.Bibutils (readBiblioFile)
-import Data.Maybe (fromMaybe)
-import Text.CSL.Reference (emptyReference)
-import Control.Monad (liftM, liftM2, mplus)
-import Data.Maybe (fromJust)
-
-main = test
-
-test :: IO ()
-test = do
-  txt <- readFile "pages/publi.markdown"
-  refs <- readBiblioFile "assets/bib/main.bib"
-  putStrLn $ processCitations refs txt
-
 
 data KeyData = KeyData { key :: Maybe String   -- the original key string
                        , keyId :: Maybe String -- the key id of the citation to process
@@ -35,6 +18,12 @@ data KeyData = KeyData { key :: Maybe String   -- the original key string
 
 newtype Ltext = Ltext String  deriving (Show)
 newtype Url = Url String  deriving (Show)
+
+test :: IO ()
+test = do
+  txt <- readFile "pages/publi.markdown"
+  refs <- readBiblioFile "assets/bib/main.bib"
+  putStrLn $ processCitations refs txt
 
 emptyKeyData :: KeyData
 emptyKeyData = KeyData { key = Nothing
@@ -49,7 +38,7 @@ processCitation :: [Reference] -- ^ the database of biblio references
 processCitation refs k = genCiteMetadata $ union [k, keydata]
     where keydata = case parse (parseBibtexNote <* eof) "" keyNote of
             Left err -> emptyKeyData { notes = Just $ show err }
-            Right k  -> k
+            Right k' -> k'
           keyNote = case href of
             Nothing -> "ERROR! reference not found!"
             Just h  -> renderPlain $ note h
@@ -121,8 +110,8 @@ parseLink  = do
     spaces
     href <- many1 $ noneOf "="
     _ <- string "=" <* spaces
-    url <- many1 $ noneOf ","
-    return $ emptyKeyData { links = [(Ltext $ strip href, Url $ strip url)] }
+    u <- many1 $ noneOf ","
+    return $ emptyKeyData { links = [(Ltext $ strip href, Url $ strip u)] }
 
 -- | extract a sequence of characters terminated by a comma from a note field
 --
@@ -166,14 +155,14 @@ parsePageElements p = try (parseCite p)
 
 parseCite :: (KeyData -> String) -> Parser String
 parseCite p = do
-    string "[@"
+    _ <- string "[@"
     k <- many1 $ choice [alphaNum, char ':']
-    string "]"
+    _ <- string "]"
     return $ p (emptyKeyData { key = Just $ "[@"++k++"]", keyId = Just k })
 
 parseInTextCite :: (KeyData -> String) -> Parser String
 parseInTextCite p = do
-    string "@"
+    _ <- string "@"
     k <- many1 $ choice [alphaNum, char ':']
     return $ p (emptyKeyData { key = Just $ "@"++k, keyId = Just k })
 
