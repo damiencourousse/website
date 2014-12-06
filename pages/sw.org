@@ -21,3 +21,6 @@ have contributed to.
 You can checkout my [[https://github.com/damiencourousse][github]] and [[https://bitbucket.org/damien_courouss/][bitbucket]] accounts.
 
 #+COMMENT: smtps-gmail
+#+COMMENT: inkscapeslide
+#+COMMENT: mailtom
+
