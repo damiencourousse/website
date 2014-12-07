@@ -28,7 +28,7 @@ main = do
 
     -- static content
     mapM_ (`match` (route idRoute >> compile copyFileCompiler))
-          [ "assets/js/*", "images/*", "media/*", "CNAME" ]
+          [ "assets/js/*", "images/*", "media/*", "pdf/*", "CNAME" ]
 
     match "assets/css/*" $ do
         route   idRoute
