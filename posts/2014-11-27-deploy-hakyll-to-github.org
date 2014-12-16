@@ -4,22 +4,18 @@ title: deploying site sources from hakyll to github.io
 
 All blog posts that explain how to publish your site sources to
 github.io from a Hakyll build suggest to use the =_site= directory as
-a git submodule.
-
-After a few experiments, I came to the conclusion that doing this can
-lead to some troubles.
-
-I detail in this post why, and the workaround I use instead.
+a git submodule.  After a few experiments, I came to the conclusion
+that doing this can lead to some trouble.  I explain in this post why,
+and detail the workaround I use instead.
 
 Most of the times, you build your site sources with:
 #+BEGIN_EXAMPLE
 cabal run build
 #+END_EXAMPLE
 and all is perfect. The directory =_site= is updated and, in case you
-declared it as a submodule, and furthermore that you took previously
-the precaution no to be on a detached state in this submodule,
-everything is fine and the contents of the submodule are correctly
-updated.
+declared =_site= as a submodule, everything is fine and the contents
+of the submodule are correctly updated.  The only precaution to take
+is to be sure that =_site= is not on a 'detached HEAD' state.
 
 
 Imagine now that you run instead:
@@ -31,15 +27,16 @@ cabal run rebuild
 
 In this case, you can notice that hakyll first wipes out the
 directories =_cache= and =_site=.  What happens then? git-submodule is
-now wrecked out, and the directory =_site= is considered as a standard
-subdirectory in your source tree instead of a submodule!  Indeed, if
-you go in the directory =_site= and for example run =git remote -v=,
-you will see that =origin= points to the location of you Hakyll source
-tree, not to the location of your =github.io= repository where you
-push the source site files!
+now wrecked out, and, because =_site/.git= has been deleted, the
+directory =_site= is considered as a standard subdirectory in your
+source tree instead of a submodule!  Indeed, if you go in the
+directory =_site= and for example run =git remote -v=, you will see
+that =origin= points to the location of you Hakyll source tree, not to
+the location of your =github.io= repository where you push the source
+site files!
 
-Why did it happen? Because the =rebuild= process first involves the
-deletion of the =_site= directory.
+Why did this happen? Because the =rebuild= process first involves the
+deletion of the =_site= directory. Hence the =.git= subdirectory.
 
 Hopefully you can recover from this situation. Go to the Hakyll source
 tree and run:
@@ -49,9 +46,16 @@ git submodule udpate --remote
 
 
 To avoid this problem, it is necessary to use two separate directories
-for =_site= and your submodule directory. Once the Hakyll
-build/rebuild process is done, just copy the files from =_site= into
-your submodule directory (first checkout to the default branch!).
+for the build directory used by Hakyll, and the git submodule used to
+push the files of your website to github. Hakyll uses =_site= as a
+build directory, and I created a submodule in =site=.
+
+To summarise, the build/update process involves these steps:
+1. hakyll build
+2. set your build submodule (e.g. =site=) to the default branch (e.g. =master=)
+3. sync =_site= to your build submodule (e.g. =site=). Do not delete
+   the =.git= subdirectory!
+4. git push to github
 
 I pushed all of this in a minimalist =Makefile= (my submodule lies in =site=):
 #+BEGIN_EXAMPLE
@@ -65,13 +69,14 @@ watch:
 
 push: rebuild
 	git submodule update --remote --merge
+	rsync -avr --delete --exclude='.git'  _site/ site/
 	cd site \
 		&& git checkout master \
-		&& rsync -avr --delete ../_site/* ./ \
 		&& git add . \
 		&& git commit -m 'site update' \
 		&& git push origin master
 	git add site
 	git commit -m 'site update'
+	git push origin master
 #+END_EXAMPLE
 
