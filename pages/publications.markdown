@@ -3,8 +3,16 @@ title: publications
 related: research
 biblio: main.bib
 csl: ieee.csl
-date: 2014-12-07
+date: 2014-12-16
 ---
+
+<p style="text-align:center">
+	<a href="http://dblp.uni-trier.de/pers/hd/c/Courouss=eacute=:Damien?q=damien+courouss%C3%A9">dblp</a>
+	-
+	<a href="http://www.researchgate.net/profile/Damien_Courousse">researchGate</a>
+	-
+	<a href="http://scholar.google.fr/citations?user=obHNKMEAAAAJ&hl=fr">google Scholar</a>
+</p>
 
 
 @CC2014

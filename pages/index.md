@@ -1,6 +1,6 @@
 ---
 title: damien couroussé
-published: 2014-12-01
+published: 2014-12-16
 ---
 
 <img src="/images/damien.jpg" style="float: right; margin: 20px; width: 200px;" />
