@@ -8,9 +8,9 @@ watch:
 
 push: rebuild
 	git submodule update --remote --merge
+	rsync -avr --delete --exclude='.git'  _site/ site/
 	cd site \
 		&& git checkout master \
-		&& rsync -avr --delete ../_site/* ./ \
 		&& git add . \
 		&& git commit -m 'site update' \
 		&& git push origin master
