@@ -5,6 +5,9 @@
 		padding-left:2em;
 		padding-right:2em
 }
+html {
+	font-family: 'sans serif';
+}
 h1 {
 	font-weight: normal;
     color: #000;
@@ -20,5 +23,18 @@ h3 {
 body {
     color: #000;
 }
+pre {
+    background-color: #F5F5F5;
+    border-radius: 4px;
+    border: 1px solid #CCC;
+    display: block;
+    line-height: 1.42857;
+    margin: 0px 0px 10px;
+    padding: 9.5px;
+    word-wrap: break-word;
+}
 
+code {
+	font-size: 100%;
+}
 
