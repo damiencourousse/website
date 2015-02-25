@@ -1,7 +1,7 @@
 ---
 published: 2014-12-01
 ---
-* professionnal activity
+* professional activity
 I am the main maintainer of deGoal, a tool for the design of runtime code generators, also called [[https://hpcharles.wordpress.com/softwares/][`compilettes`]]. deGoal is the property of CEA and not released publicly at this time. For further information, please reach me and/or can check my list of publications.
 
 deGoal is the core technology used in [[http://www.cogito-anr.fr/][COGITO]], a research project that studies the potential of runtime code generation for security purposes in embedded devices.
