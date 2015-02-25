@@ -2,42 +2,16 @@
 title: generating page contents from org-mode files
 ---
 
-*draft notes* -- should be updated as soon as possible!
+The markdown format is nice, but considering that I extensively use
+[[http://orgmode.org][OrgMode]], I investigated a bit to use org-mode files for generating the
+contents of this website.
+Indeed, org-mode files are supported by pandoc since version 1.12,
+which has been integrated in [[http://jaspervdj.be/hakyll/releases.html][hakyll 4.5.2]].
 
-The markdown format is nice, but considering that I use extensively
-use [[http://orgmode.org][OrgMode]], I investigated a bit to use org-mode files for generating
-the contents of this website.
+* Generation of pages from org-mode files
 
-
-* Metadata
-
-Org files have their own metadata format.
-Metadata are defined inside the file, for example as follows:
-
-#+BEGIN_EXAMPLE
-#FILE: mypage.org
-#+TITLE: A page title
-#+END_EXAMPLE
-
-However, Hakyll-specific metadata or custom metadata for your build
-system are not recognised in org files. In this case, it is possible
-to [[http://jaspervdj.be/hakyll/tutorials/02-basics.html#pages-and-metadata][create a metadata file]]  that will describe your metadata with the
-syntax used by Hakyll:
-
-#+BEGIN_EXAMPLE
-#FILE: mypage.org.metadata
----
-title: A page title
----
-#+END_EXAMPLE
-
-When a metadata file is used, its contents override the metadata
-fields described in the org file.
-
-
-* Example: generation of pages from org-mode files
-
-A simple build rule for Hakyll could be:
+This is straightforward.
+Here is an example of a simple build rule for Hakyll:
 
 #+BEGIN_SRC Haskell
     -- Static pages
@@ -49,56 +23,29 @@ A simple build rule for Hakyll could be:
                 >>= relativizeUrls
 #+END_SRC
 
-* Including bibliographic references
+* Metadata
 
-In org-mode files, the biblio reference is included with this format :
-=[@hennessy]=.
+Metadata are defined in an org-mode file with a dedicated format :
 
-The output is generated as follows, according to the =csl= file
-selected, and to the contents of the bibtex file:
-
-[@hennessy]
-
-** pandoc: usage example
 #+BEGIN_EXAMPLE
-pandoc -f org -t plain  --bibliography ../assets/bib/main.bib --csl ../assets/csl/jcsl.csl  -s test.org  -o citations.txt
+#FILE: mypage.org
+#+TITLE: A page title
 #+END_EXAMPLE
 
+However, org-mode metadata are not recognised by Hakyll, especially if
+you want to exploit metadata in your build system.
+To do so, you need to [[http://jaspervdj.be/hakyll/tutorials/02-basics.html#pages-and-metadata][create a metadata file]] that will describe your
+metadata with the syntax used by Hakyll, or to add a metadata header
+in the org-mode file:
 
-** build rule for Hakyll
-
-I have adapted the Hakyll build system of [[https://github.com/jtanguy/julien.jhome.fr.git][Julien Tanguy]]. As soon as a
-bibtex file, and possibly a csl file, are declared in the metadata of
-the source file, =bibtexCompiler= is selected.
-
-The Hakyll build rule for org-mode files becomes:
-#+BEGIN_SRC Haskell
-    -- Static pages
-    match ("pages/*.markdown" .||. "pages/*.org") $ do
-        route $ gsubRoute "pages/" (const "") `composeRoutes` setExtension "html"
-        compile $ do
-            item <- getUnderlying
-            bibFile <- liftM (fromMaybe "") $ getMetadataField item "biblio"
-            cslFile <- liftM (fromMaybe "chicago.csl") $ getMetadataField item "csl"
-            let compiler = if bibFile /= "" then
-                                bibtexCompiler cslFile bibFile
-                           else pandocCompiler
-            compiler
-                >>= loadAndApplyTemplate "templates/default.html" defaultContext
-                >>= relativizeUrls
-#+END_SRC
-
-An example of metadata declaration follows:
 #+BEGIN_EXAMPLE
 #FILE: mypage.org.metadata
-title: My org page
-biblio: main.bib
-csl: jcsl.csl
+---
+title: A page title
+---
 #+END_EXAMPLE
 
-*** Csl Trick
+When such a metadata header is used, its contents override the
+org-mode metadata values.
 
-TODO: describe this.
 
-How to generate bibliographic references from the biblio reference
-instead of the biblio citation.
