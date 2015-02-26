@@ -48,13 +48,7 @@ main = do
     match ("pages/*.markdown" .||. "pages/*.md" .||. "pages/*.org") $ do
         route $ gsubRoute "pages/" (const "") `composeRoutes` setExtension "html"
         compile $ do
-            item <- getUnderlying
-            bibFile <- liftM (fromMaybe "") $ getMetadataField item "biblio"
-            cslFile <- liftM (fromMaybe "chicago.csl") $ getMetadataField item "csl"
-            let compiler = if bibFile /= "" then
-                                bibtexCompiler cslFile bibFile
-                           else pandocCompiler
-            compiler
+            pageCompiler
                 >>= loadAndApplyTemplate "templates/default.html" defaultContext
                 >>= relativizeUrls
 
@@ -107,14 +101,22 @@ context = dateField "date" "%A, %e %B %Y"
 
 
 -- Auxiliary compilers
-bibtexCompiler :: String -> String -> Compiler (Item String)
-bibtexCompiler cslFileName bibFileName = do 
-    csl <- load (fromFilePath $ "assets/csl/" ++ cslFileName)
-    bib <- load (fromFilePath $ "assets/bib/" ++ bibFileName)
+pageCompiler :: Compiler (Item String)
+pageCompiler = do 
+    bibFile <- getUnderlying >>= (flip getMetadataField "biblio")
+    case bibFile of
+         Just f -> bibtexCompiler f
+         Nothing -> pandocCompiler
+
+bibtexCompiler :: String -> Compiler (Item String)
+bibtexCompiler bibFile = do
+    cslFile <- getUnderlying >>= (flip getMetadataField "csl")
+    csl <- load (fromFilePath $ "assets/csl/" ++ (fromMaybe "chicago.csl" cslFile))
+    bib <- load (fromFilePath $ "assets/bib/" ++ bibFile)
     liftM writePandoc
         (getResourceBody >>=
-         preprocessBiblioCompiler bib >>=
-         readPandocBiblio def csl bib)
+        preprocessBiblioCompiler bib >>=
+        readPandocBiblio def csl bib)
 
 preprocessBiblioCompiler :: Item Biblio            -- ^ the biblio references
                          -> Item String            -- ^ the page body
@@ -141,4 +143,3 @@ tagsCtx :: Tags -> Context String
 tagsCtx tags = mconcat [ tagsField "prettytags" tags
                        , postCtx
                        ]
-
