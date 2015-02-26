@@ -14,6 +14,9 @@ date: 2014-12-16
 	<a href="http://scholar.google.fr/citations?user=obHNKMEAAAAJ&hl=fr">google Scholar</a>
 </p>
 
+@Endo2015:HiPEAC:RAPIDO
+
+@Endo2015:HiPEAC:DCE
 
 @CC2014
 
