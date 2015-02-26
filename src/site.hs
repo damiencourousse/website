@@ -1,4 +1,3 @@
---------------------------------------------------------------------------------
 {-# LANGUAGE OverloadedStrings #-}
 
 import Control.Monad (liftM)
@@ -11,7 +10,6 @@ import BibParse
 import GHC.IO.Encoding
 
 
---------------------------------------------------------------------------------
 main :: IO ()
 main = do
   setLocaleEncoding utf8
@@ -111,7 +109,6 @@ context = dateField "date" "%A, %e %B %Y"
 -- Auxiliary compilers
 bibtexCompiler :: String -> String -> Compiler (Item String)
 bibtexCompiler cslFileName bibFileName = do 
-    -- TODO System.FilePath.Posix (</>) :: FilePath -> FilePath -> FilePath
     csl <- load (fromFilePath $ "assets/csl/" ++ cslFileName)
     bib <- load (fromFilePath $ "assets/bib/" ++ bibFileName)
     liftM writePandoc
@@ -122,14 +119,12 @@ bibtexCompiler cslFileName bibFileName = do 
 preprocessBiblioCompiler :: Item Biblio            -- ^ the biblio references
                          -> Item String            -- ^ the page body
                          -> Compiler (Item String)
-preprocessBiblioCompiler bib txt = return $ fmap (truc bib) txt
+preprocessBiblioCompiler bib txt = return $ fmap (appendCitation bib) txt
 
-truc :: Item Biblio -> String -> String
--- TODO utiliser truc:: Biblio -> String -> String
-truc bib = processCitations refs
+appendCitation :: Item Biblio -> String -> String
+appendCitation bib = processCitations refs
     where Biblio refs = itemBody bib
 
---------------------------------------------------------------------------------
 postCtx :: Context String
 postCtx =
     dateField "date" "%B %e, %Y" `mappend`
@@ -147,7 +142,3 @@ tagsCtx tags = mconcat [ tagsField "prettytags" tags
                        , postCtx
                        ]
 
-
-{-writerConfig = def-}
-{-readerConfig = def { readerSmart = True, readerOldDashes = True }-}
-{-myPandocCompiler = pandocCompilerWith readerConfig writerConfig-}

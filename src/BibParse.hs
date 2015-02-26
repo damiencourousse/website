@@ -6,7 +6,7 @@ import Control.Applicative ((<*))
 import Control.Monad (liftM, liftM2, mplus)
 import Data.Maybe (fromMaybe)
 import Data.String.Utils (strip)
-import Text.CSL hiding (processCitations)
+import Text.CSL hiding (processCitations) -- readBiblioFile
 import Text.Parsec
 import Text.Parsec.String (Parser)
 
@@ -21,7 +21,7 @@ newtype Url = Url String  deriving (Show)
 
 test :: IO ()
 test = do
-  txt <- readFile "pages/publi.markdown"
+  txt <- readFile "pages/publications.markdown"
   refs <- readBiblioFile "assets/bib/main.bib"
   putStrLn $ processCitations refs txt
 
@@ -32,9 +32,22 @@ emptyKeyData = KeyData { key = Nothing
                        , links = []
                        }
 
-processCitation :: [Reference] -- ^ the database of biblio references
-                -> KeyData
-                -> String      -- ^ the transformed citation
+-- TODO voir comment utiliser un Reader Monad pour stocker la liste de refs,
+-- [Reference], et éventuellement le type de format de fichier à lire, e.g.
+-- Markdown ou OrgMode ou autre.
+
+-- | parse a text string that might contain bibliographic references, extract
+-- some metadata and return the same text, extended with the metadata found in
+-- the input list of references.
+processCitations :: [Reference] -- ^ input bib refs provided by Text.CSL
+                 -> String      -- ^ text to parse containing biblio citations
+                 -> String
+processCitations refs = parseStr (parseCitations $ processCitation refs)
+
+-- | process one bibliographic citation
+processCitation :: [Reference] -- ^ the list of known biblio references
+                -> KeyData     -- ^ the citation to process
+                -> String      -- ^ the citation in text format, extended with metadata found in [Reference]
 processCitation refs k = genCiteMetadata $ union [k, keydata]
     where keydata = case parse (parseBibtexNote <* eof) "" keyNote of
             Left err -> emptyKeyData { notes = Just $ show err }
@@ -45,6 +58,8 @@ processCitation refs k = genCiteMetadata $ union [k, keydata]
           href = getReference refs citeKey
           citeKey = emptyCite { citeId = fromMaybe "malformed KeyData" $ keyId k }
 
+-- | generate the string that contains metadata
+-- TODO this function produces markdown text
 genCiteMetadata :: KeyData -> String
 genCiteMetadata k  = unwords $ [ fromMaybe "key: empty" $ key k
                              {-, fromMaybe "keyId: empty\n" $ keyId k-}
@@ -131,9 +146,6 @@ fromEither e = case e of
     Left err -> show err
     Right c -> c
 
-
-processCitations :: [Reference] -> String -> String
-processCitations refs = parseStr (parseCitations $ processCitation refs)
 
 -- |
 -- parse a page body, extract bibliographic citations,
