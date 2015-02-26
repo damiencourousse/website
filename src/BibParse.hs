@@ -116,7 +116,7 @@ parseNoteElement =   try parseLink
 -- Right (KeyData {key = Nothing, keyId = Nothing, notes = Nothing, links = [(Ltext "link name with spaces",Url "/media/paper_0.pdf")]})
 --
 -- >>> parse parseLink  "" "a few notes, link=http://url.com"
--- Right (KeyData {key = Nothing, keyId = Nothing, notes = Nothing, links = [(Ltext "afewnotes,link",Url "http://url.com")]})
+-- Right (KeyData {key = Nothing, keyId = Nothing, notes = Nothing, links = [(Ltext "a few notes, link",Url "http://url.com")]})
 --
 -- >>> parse parseLink  "" "link=http://url.com, a few notes"
 -- Right (KeyData {key = Nothing, keyId = Nothing, notes = Nothing, links = [(Ltext "link",Url "http://url.com")]})
