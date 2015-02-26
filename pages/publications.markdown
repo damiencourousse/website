@@ -56,6 +56,8 @@ date: 2015-02-26
 
 @courousse07:lexiconMotionCapture
 
+@luciani07:lexiconGestureMovementAction
+
 @enactive2007:WP3D1
 
 @castet07:EI07
