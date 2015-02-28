@@ -3,8 +3,8 @@ title: damien couroussé
 published: 2015-02-26
 ---
 
-<img src="/images/damien.jpg" style="float: right; margin: 20px; width: 200px;" />
-
+<div class="pure-u-1 pure-u-md-2-3">
+<div class="l-box">
 I am research engineer at [CEA]-[LIST] in Grenoble.
 
 In a nutshell:
@@ -14,6 +14,12 @@ in particular in compilation and runtime code generation for performance and sec
 Past topics:
 [Cyber-physical systems] dedicated to [human-machine interaction] (otherwise called _haptic systems_).
 
+</div>
+</div>
+
+<div class="pure-u-1 pure-u-md-7-24">
+<img class="pure-img" src="/images/damien.jpg" alt="Damien Couroussé" style="padding=1em; width: 200px;" />
+</div>
 
 [CEA]: http://www.cea.fr/technologies
 [LIST]: http://www-list.cea.fr
