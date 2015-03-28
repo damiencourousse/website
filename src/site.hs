@@ -125,9 +125,9 @@ builtPageCtx = dateField "date" "%A, %e %B %Y"
         <> defaultContext
 
 context :: Context String
-context = builtPageCtx
-        <> teaserField "description" "content"
+context = teaserField "description" "content"
         <> gitTag "git"
+        <> builtPageCtx
 
 postCtx :: Context String
 postCtx = dateField "date" "%B %e, %Y"
