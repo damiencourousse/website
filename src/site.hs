@@ -2,8 +2,9 @@
 
 import Control.Monad (liftM)
 import Data.Maybe (fromMaybe)
-import Data.Monoid ((<>), mappend, mconcat)
+import Data.Monoid ((<>))
 import Hakyll
+import System.Process (readProcess)
 import Text.Pandoc
 
 import BibParse
@@ -17,21 +18,12 @@ main = do
   setForeignEncoding utf8
   hakyll $ do
 
-    -- Build tags
-    tags <- buildTags "posts/*" (fromCapture "tags/*.html")
-
-    let collectTags = return $ map (\(t,_) -> Item (tagsMakeId tags t) t) (tagsMap tags)
-        ctx = tagsField "tags" tags <> listField "alltags" context collectTags <> context
-        template t = loadAndApplyTemplate (fromFilePath $ "templates/" ++ t ++ ".html") ctx
-
     -- static content
     mapM_ (`match` (route idRoute >> compile copyFileCompiler))
           [ "assets/js/*", "images/*", "media/*", "pdf/*", "CNAME" ]
-
     match "assets/css/*" $ do
         route   idRoute
         compile compressCssCompiler
-
 
     -- Bibtex entries (for bibliography)
     match "assets/bib/*" $ compile biblioCompiler
@@ -41,7 +33,7 @@ main = do
         route $ setExtension "html"
         compile $ pandocCompiler
             >>= loadAndApplyTemplate "templates/post.html"    postCtx
-            >>= loadAndApplyTemplate "templates/default.html" postCtx
+            >>= loadAndApplyTemplate "templates/default.html" context
             >>= relativizeUrls
 
     -- Static pages
@@ -49,21 +41,18 @@ main = do
         route $ gsubRoute "pages/" (const "") `composeRoutes` setExtension "html"
         compile $ do
             pageCompiler
-                >>= loadAndApplyTemplate "templates/default.html" defaultContext
+                >>= loadAndApplyTemplate "templates/default.html" context
                 >>= relativizeUrls
 
     create ["posts.html"] $ do
         route idRoute
         compile $ do
-            posts <- recentFirst =<< loadAll "posts/*"
-            let archiveCtx =
-                    listField "posts" postCtx (return posts) `mappend`
-                    constField "title" "miscellaneous notes"      `mappend`
-                    defaultContext
-
+            let archiveCtx = constField "title" "miscellaneous notes"
+                           <> listField "posts" context (loadAll "posts/*")
+                           <> defaultContext
             makeItem ""
                 >>= loadAndApplyTemplate "templates/posts.html" archiveCtx
-                >>= loadAndApplyTemplate "templates/default.html" archiveCtx
+                >>= loadAndApplyTemplate "templates/default.html" builtPageCtx
                 >>= relativizeUrls
 
     match "templates/*" $ compile templateCompiler
@@ -75,10 +64,18 @@ main = do
 
     create ["atom.xml"] $ route idRoute >> compile (loadAllSnapshots "blog/*" "content" >>= renderAtom feedConfiguration context)
     create ["rss.xml"] $ route idRoute >> compile (loadAllSnapshots "blog/*" "content" >>= renderRss feedConfiguration context)
-    create ["sitemap.xml"] $ route idRoute >> compile (makeItem "" >>= template "sitemap")
 
-    match "templates/*" $ compile templateCompiler
+    tags <- buildTags "posts/*" (fromCapture "tags/*.html")
+    let collectTags = return $ map (\(t,_) -> Item (tagsMakeId tags t) t) (tagsMap tags)
+        sitemapCtx = tagsField "tags" tags
+                   <> listField "alltags" context collectTags
+                   <> builtPageCtx
 
+    create ["sitemap.xml"] $ do
+        route idRoute
+        compile $ do
+            makeItem ""
+                >>= loadAndApplyTemplate "templates/sitemap.html" sitemapCtx
 
 feedConfiguration :: FeedConfiguration
 feedConfiguration = FeedConfiguration
@@ -88,19 +85,8 @@ feedConfiguration = FeedConfiguration
                 , feedAuthorEmail = "damien.courousse@gmail.com"
                 , feedRoot = "http://damien.courousse.fr" }
 
-context :: Context String
-context = dateField "date" "%A, %e %B %Y"
-        <> dateField "isodate" "%F"
-        <> listField "pages" context (loadAll "pages/*")
-        <> listField "posts" context (loadAll "posts/*")
-        -- <> listField "pics" context (loadAll $ "static/pics/*.png" .&&. hasVersion "map")
-        <> constField "siteroot" (feedRoot feedConfiguration)
-        <> teaserField "description" "content"
-        <> defaultContext
-
-
-
 -- Auxiliary compilers
+--    the main page compiler
 pageCompiler :: Compiler (Item String)
 pageCompiler = do 
     bibFile <- getUnderlying >>= (flip getMetadataField "biblio")
@@ -108,6 +94,7 @@ pageCompiler = do 
          Just f -> bibtexCompiler f
          Nothing -> pandocCompiler
 
+--    Biblio
 bibtexCompiler :: String -> Compiler (Item String)
 bibtexCompiler bibFile = do
     cslFile <- getUnderlying >>= (flip getMetadataField "csl")
@@ -127,19 +114,37 @@ appendCitation :: Item Biblio -> String -> String
 appendCitation bib = processCitations refs
     where Biblio refs = itemBody bib
 
+-- Context builders
+builtPageCtx :: Context String
+builtPageCtx = dateField "date" "%A, %e %B %Y"
+        <> dateField "isodate" "%F"
+        <> listField "pages" context (loadAll "pages/*")
+        <> listField "posts" context (loadAll "posts/*")
+        <> constField "siteroot" (feedRoot feedConfiguration)
+        <> constField "git" "" -- create and empty "git" field required in the default template
+        <> defaultContext
+
+context :: Context String
+context = builtPageCtx
+        <> teaserField "description" "content"
+        <> gitTag "git"
+
 postCtx :: Context String
-postCtx =
-    dateField "date" "%B %e, %Y" `mappend`
-    defaultContext
+postCtx = dateField "date" "%B %e, %Y"
+    <> dateField "dateArchive" "%b %e"
+    <> defaultContext
 
-postList :: Tags -> Pattern -> ([Item String] -> Compiler [Item String])
-         -> Compiler String
-postList tags pattern preprocess' = do
-    postItemTpl <- loadBody "templates/archive-item.html"
-    posts <- preprocess' =<< loadAll (pattern .&&. hasNoVersion)
-    applyTemplateList postItemTpl (tagsCtx tags) posts
+-- | Extracts git commit info and render some html code for the page footer.
+-- Copied and adapted from
+-- Jorge.Israel.Peña at https://github.com/blaenk/blaenk.github.io
+-- Miikka Koskinen at http://vapaus.org/text/hakyll-configuration.html
+gitTag :: String -> Context String
+gitTag key = field key $ \item -> do
+  let fp = toFilePath $ itemIdentifier item
+      gitLog format =
+        readProcess "git" ["log", "-1", "HEAD", "--pretty=format:" ++ format, fp] ""
+  unsafeCompiler $ do
+    sha     <- gitLog "%h"
+    date    <- gitLog "%aD"
+    return $ "File last modified " ++ date ++ " (" ++ sha ++ ")"
 
-tagsCtx :: Tags -> Context String
-tagsCtx tags = mconcat [ tagsField "prettytags" tags
-                       , postCtx
-                       ]
