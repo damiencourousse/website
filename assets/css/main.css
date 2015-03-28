@@ -29,7 +29,6 @@ pre {
     border: 1px solid #CCC;
     display: block;
     line-height: 1.42857;
-    margin: 0px 0px 10px;
     padding: 9.5px;
     word-wrap: break-word;
 }
@@ -38,3 +37,6 @@ code {
 	font-size: 100%;
 }
 
+p, pre {
+    margin: 1ex 1em;
+}
