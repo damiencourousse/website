@@ -30,11 +30,6 @@ This is the parent `<div>` that contains the menu and the content area.
     padding-left: 0;
 }
 
-#layout.active {
-    position: relative;
-    left: 150px;
-}
-
 #layout.active #menu {
     left: 150px;
     width: 150px;
