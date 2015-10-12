@@ -3,4 +3,4 @@
 	url = git@github.com:damiencourousse/damiencourousse.github.io.git
 [submodule "submodules/mespubli"]
 	path = submodules/mespubli
-	url = ssh://git@alain.local/w/mespublis.git
+	url = ssh://git@git.courousse.fr/w/mespublis.git
