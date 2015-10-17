@@ -36,8 +36,6 @@ date: 2015-02-26
 
 @Lhuillier2012:DCE
 
-@Courousse2011:p2012devconf
-
 @Luciani2009
 
 @Luciani2008:cyberworlds
