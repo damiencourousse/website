@@ -2,15 +2,16 @@ module BibParse
     ( processCitations )
     where
 
-import Control.Applicative ((<*))
-import Control.Monad (liftM, liftM2, mplus)
-import Data.Maybe (fromMaybe)
-import Data.String.Utils (strip)
-import Text.CSL hiding (processCitations) -- readBiblioFile
-import Text.Parsec
-import Text.Parsec.String (Parser)
+import           Control.Applicative ((<*))
+import           Control.Monad       (liftM, liftM2, mplus)
+import           Data.List           (intersperse)
+import           Data.Maybe          (fromMaybe)
+import           Data.String.Utils   (strip)
+import           Text.CSL            hiding (processCitations)
+import           Text.Parsec
+import           Text.Parsec.String  (Parser)
 
-data KeyData = KeyData { key :: Maybe String   -- the original key string
+data KeyData = KeyData { key   :: Maybe String   -- the original key string
                        , keyId :: Maybe String -- the key id of the citation to process
                        , notes :: Maybe String
                        , links :: [(Ltext, Url)]
