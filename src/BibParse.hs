@@ -63,8 +63,6 @@ processCitation refs k = genCiteMetadata $ union [k, keydata]
 -- TODO this function produces markdown text
 genCiteMetadata :: KeyData -> String
 genCiteMetadata k  = unwords $ [ fromMaybe "key: empty" $ key k
-                             {-, fromMaybe "keyId: empty\n" $ keyId k-}
-                             --
                              -- Markdown links always start with the link text
                              -- enclosed in brackets. This HTML makes a clear
                              -- separation with the previous biblio citation.
@@ -78,7 +76,7 @@ genCiteMetadata k  = unwords $ [ fromMaybe "key: empty" $ key k
                              ++ (map genHrefs $ links k)
 
 genHrefs :: (Ltext, Url) -> String
-genHrefs (Ltext h, Url u) = "[" ++ h ++ "](" ++ u ++ ") "
+genHrefs (Ltext h, Url u) = "[[" ++ h ++ "](" ++ u ++ ")]"
 
 
 -- |
