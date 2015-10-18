@@ -9,7 +9,7 @@ executable site
   build-depends:    base == 4.*
                   , blaze-html
                   , filepath
-                  , hakyll == 4.5.*
+                  , hakyll >= 4.6.9
                   , pandoc
                   , pandoc-citeproc
                   , parsec
