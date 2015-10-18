@@ -7,11 +7,7 @@ date: 2015-02-26
 ---
 
 <p style="text-align:center">
-	<a href="http://dblp.uni-trier.de/pers/hd/c/Courouss=eacute=:Damien?q=damien+courouss%C3%A9">dblp</a>
-	-
-	<a href="http://www.researchgate.net/profile/Damien_Courousse">researchGate</a>
-	-
-	<a href="http://scholar.google.fr/citations?user=obHNKMEAAAAJ&hl=fr">google Scholar</a>
+<a href="http://dblp.uni-trier.de/pers/hd/c/Courouss=eacute=:Damien?q=damien+courouss%C3%A9">dblp</a> - <a href="http://www.researchgate.net/profile/Damien_Courousse">researchGate</a> - <a href="http://scholar.google.fr/citations?user=obHNKMEAAAAJ&hl=fr">google Scholar</a>
 </p>
 
 @Endo2015:HiPEAC:RAPIDO
