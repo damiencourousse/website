@@ -33,7 +33,7 @@ main = do
         route $ setExtension "html"
         compile $ pandocCompiler
             >>= loadAndApplyTemplate "templates/post.html"    postCtx
-            >>= loadAndApplyTemplate "templates/default.html" context
+            >>= loadAndApplyTemplate "templates/default.html" builtPageCtx
             >>= relativizeUrls
 
     -- Static pages
@@ -41,18 +41,18 @@ main = do
         route $ gsubRoute "pages/" (const "") `composeRoutes` setExtension "html"
         compile $ do
             pageCompiler
-                >>= loadAndApplyTemplate "templates/default.html" context
+                >>= loadAndApplyTemplate "templates/default.html" builtPageCtx
                 >>= relativizeUrls
 
     create ["posts.html"] $ do
         route idRoute
         compile $ do
-            let archiveCtx = constField "title" "miscellaneous notes"
-                           <> listField "posts" context (loadAll "posts/*")
+            let archiveCtx =  constField "title" "miscellaneous notes"
+                           <> listField "posts" builtPageCtx (loadAll "posts/*")
                            <> defaultContext
             makeItem ""
                 >>= loadAndApplyTemplate "templates/posts.html" archiveCtx
-                >>= loadAndApplyTemplate "templates/default.html" builtPageCtx
+                >>= loadAndApplyTemplate "templates/default.html" defaultContext
                 >>= relativizeUrls
 
     match "templates/*" $ compile templateCompiler
@@ -63,29 +63,30 @@ main = do
         compile copyFileCompiler
 
     tags <- buildTags "posts/*" (fromCapture "tags/*.html")
-    let collectTags = return $ map (\(t,_) -> Item (tagsMakeId tags t) t) (tagsMap tags)
-        sitemapCtx = tagsField "tags" tags
-                   <> listField "alltags" context collectTags
-                   <> builtPageCtx
 
     create ["sitemap.xml"] $ do
         route idRoute
         compile $ do
+            -- posts <- recentFirst =<< loadAll "posts/*"
+            -- pages <- loadAll "pages/*"
+            -- let allPages = pages ++ posts
+            let sitemapCtx = builtPageCtx <> lastGitModification
             makeItem ""
-                >>= loadAndApplyTemplate "templates/sitemap.html" sitemapCtx
+                >>= loadAndApplyTemplate "templates/sitemap.xml" sitemapCtx
 
 feedConfiguration :: FeedConfiguration
 feedConfiguration = FeedConfiguration
-                { feedTitle = "Damien Couroussé"
-                , feedDescription = ""
-                , feedAuthorName = "Damien Couroussé"
-                , feedAuthorEmail = "damien.courousse@gmail.com"
-                , feedRoot = "http://damien.courousse.fr" }
+                  { feedTitle = "Damien Couroussé"
+                  , feedDescription = ""
+                  , feedAuthorName = "Damien Couroussé"
+                  , feedAuthorEmail = "damien.courousse@gmail.com"
+                  , feedRoot = "http://damien.courousse.fr"
+                  }
 
 -- Auxiliary compilers
 --    the main page compiler
 pageCompiler :: Compiler (Item String)
-pageCompiler = do 
+pageCompiler = do
     bibFile <- getUnderlying >>= (flip getMetadataField "biblio")
     case bibFile of
          Just f -> bibtexCompiler f
@@ -113,30 +114,26 @@ appendCitation bib = processCitations refs
 
 -- Context builders
 builtPageCtx :: Context String
-builtPageCtx = dateField "date" "%A, %e %B %Y"
-        <> dateField "isodate" "%F"
-        <> listField "pages" context (loadAll "pages/*")
-        <> listField "posts" context (loadAll "posts/*")
-        <> constField "siteroot" (feedRoot feedConfiguration)
-        <> constField "git" "" -- create and empty "git" field required in the default template
-        <> defaultContext
-
-context :: Context String
-context = teaserField "description" "content"
-        <> gitTag "git"
-        <> builtPageCtx
+builtPageCtx =  constField "siteroot" (feedRoot feedConfiguration)
+             <> listField "entries" builtPageCtx (loadAll $ "pages/*" .||. "posts/*")
+             <> dateField "date" "%A, %e %B %Y"
+             <> dateField "isodate" "%F"
+             <> gitTag
+             <> lastGitModification
+             <> defaultContext
 
 postCtx :: Context String
-postCtx = dateField "date" "%B %e, %Y"
-    <> dateField "dateArchive" "%b %e"
-    <> defaultContext
+postCtx =  dateField "date" "%B %e, %Y"
+        <> dateField "dateArchive" "%b %e"
+        <> modificationTimeField "mtime" "%F"
+        <> defaultContext
 
 -- | Extracts git commit info and render some html code for the page footer.
--- Copied and adapted from
+-- Adapted from
 -- Jorge.Israel.Peña at https://github.com/blaenk/blaenk.github.io
 -- Miikka Koskinen at http://vapaus.org/text/hakyll-configuration.html
-gitTag :: String -> Context String
-gitTag key = field key $ \item -> do
+gitTag :: Context String
+gitTag = field "gitinfo" $ \item -> do
   let fp = toFilePath $ itemIdentifier item
       gitLog format =
         readProcess "git" ["log", "-1", "HEAD", "--pretty=format:" ++ format, fp] ""
@@ -144,4 +141,11 @@ gitTag key = field key $ \item -> do
     sha     <- gitLog "%h"
     date    <- gitLog "%aD"
     return $ "File last modified " ++ date ++ " (" ++ sha ++ ")"
+
+-- | Extract the last modification date from the git commits
+lastGitModification :: Context a
+lastGitModification = field "lastgitmod" $ \item -> do
+  let fp = toFilePath $ itemIdentifier item
+  unsafeCompiler $
+    readProcess "git" ["log", "-1", "HEAD", "--pretty=format:%ad", "--date=short", fp] ""
 
