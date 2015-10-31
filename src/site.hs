@@ -62,9 +62,6 @@ main = do
         route $ gsubRoute "assets/txt/" (const "")
         compile copyFileCompiler
 
-    create ["atom.xml"] $ route idRoute >> compile (loadAllSnapshots "blog/*" "content" >>= renderAtom feedConfiguration context)
-    create ["rss.xml"] $ route idRoute >> compile (loadAllSnapshots "blog/*" "content" >>= renderRss feedConfiguration context)
-
     tags <- buildTags "posts/*" (fromCapture "tags/*.html")
     let collectTags = return $ map (\(t,_) -> Item (tagsMakeId tags t) t) (tagsMap tags)
         sitemapCtx = tagsField "tags" tags
