@@ -138,9 +138,12 @@ gitTag = field "gitinfo" $ \item -> do
       gitLog format =
         readProcess "git" ["log", "-1", "HEAD", "--pretty=format:" ++ format, fp] ""
   unsafeCompiler $ do
-    sha     <- gitLog "%h"
     date    <- gitLog "%aD"
-    return $ "File last modified " ++ date ++ " (" ++ sha ++ ")"
+    return $ concat
+             [ "<a href=https://github.com/damiencourousse/damiencourousse.github.io/commits/master>"
+             , "File last modified " ++ date
+             , "</a>"
+             ]
 
 -- | Extract the last modification date from the git commits
 lastGitModification :: Context a
