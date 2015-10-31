@@ -1,10 +1,11 @@
 {-# LANGUAGE OverloadedStrings #-}
 
 import Control.Monad (liftM)
+import Control.Applicative
 import Data.Maybe (fromMaybe)
 import Data.Monoid ((<>))
 import Hakyll
-import System.Process (readProcess)
+import System.Process (readProcess, readCreateProcess, shell)
 import Text.Pandoc
 
 import BibParse
@@ -137,10 +138,24 @@ gitTag = field "gitinfo" $ \item -> do
   let fp = toFilePath $ itemIdentifier item
       gitLog format =
         readProcess "git" ["log", "-1", "HEAD", "--pretty=format:" ++ format, fp] ""
+  route <- fromMaybe "" <$> (getRoute =<< getUnderlying)
   unsafeCompiler $ do
     sha     <- gitLog "%h"
     date    <- gitLog "%aD"
-    return $ "File last modified " ++ date ++ " (" ++ sha ++ ")"
+
+    -- the target file is build in a separate git repository, located in site/.
+    -- We need to invocate git from this subdirectory to retrieve the last
+    -- modification commit of this built file.
+    routesha <- readCreateProcess (shell $ "cd site && git log -1 HEAD --pretty=format:%H " ++ route) ""
+
+    let shaurl = concat
+               [ "<a href=https://github.com/damiencourousse/damiencourousse.github.io/commit/"
+               , routesha
+               , ">"
+               , sha
+               , "</a>"
+               ]
+    return $ "File last modified " ++ date ++ " (" ++ shaurl ++ ")"
 
 -- | Extract the last modification date from the git commits
 lastGitModification :: Context a
