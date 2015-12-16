@@ -13,6 +13,8 @@ date: 2015-02-26
 - <a href="http://www.researchgate.net/profile/Damien_Courousse">ResearchGate</a>
 </p>
 
+@Queva2015:IoTsymposiumESWeek
+
 @Endo2015:HiPEAC:RAPIDO
 
 @Endo2015:HiPEAC:DCE
