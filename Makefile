@@ -1,10 +1,14 @@
 .PHONY: build rebuild watch
-build:
-	cabal run $@
-rebuild:
-	cabal run $@
-watch:
-	cabal run $@
+build: stack_build
+	stack exec site -- $@
+rebuild: stack_build
+	stack exec site -- $@
+watch: stack_build
+	stack exec site -- $@
+
+.PHONY: stack_build
+stack_build:
+	stack build
 
 push: rebuild
 	git submodule update --remote --merge
