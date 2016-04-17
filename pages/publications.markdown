@@ -13,7 +13,7 @@ date: 2015-02-26
 - <a href="http://www.researchgate.net/profile/Damien_Courousse">ResearchGate</a>
 </p>
 
-Peer-reviewed papers
+peer-reviewed papers
 ====================
 
 @Barry2016:CS2
@@ -75,7 +75,7 @@ Peer-reviewed papers
 @courousse05:EI05
 
 
-Talks and posters
+talks and posters
 =================
 
 @Courousse2015:IRISA
@@ -88,14 +88,14 @@ Talks and posters
 
 @Courousse2014:CompilationNice
 
-Research Reports
+research reports
 ================
 
 @Noura2015:IACRePrint
 
 @enactive2007:WP3D1
 
-PhD Thesis
+phd thesis
 ==========
 
 @courousse08:PhDThesis
