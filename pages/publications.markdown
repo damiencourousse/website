@@ -82,6 +82,10 @@ talks and posters
 
 @Courousse2016:aussois
 
+@Courousse2016:cyberinbretagne
+
+@Courousse2016:RESSI
+
 @Courousse2015:IRISA
 
 @Queva2015:IoTsymposiumESWeek
