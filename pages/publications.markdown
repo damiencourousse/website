@@ -16,6 +16,8 @@ date: 2015-02-26
 peer-reviewed papers
 ====================
 
+@LeBouder2016
+
 @Barry2016:CS2
 
 @Courousse2016:WAPCO
