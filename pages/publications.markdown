@@ -80,6 +80,8 @@ peer-reviewed papers
 talks and posters
 =================
 
+@Courousse2016:aussois
+
 @Courousse2015:IRISA
 
 @Queva2015:IoTsymposiumESWeek
