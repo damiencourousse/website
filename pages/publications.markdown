@@ -16,6 +16,8 @@ date: 2015-02-26
 peer-reviewed papers
 ====================
 
+@WISTP2016:proceedings
+
 @LeBouder2016
 
 @Barry2016:CS2
