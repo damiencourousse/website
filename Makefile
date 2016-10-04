@@ -1,3 +1,6 @@
+PDFS := $(wildcard mespubli/pdf/*.pdf)
+LINKS := $(patsubst mespubli/%,%,$(PDFS))
+
 .PHONY: build rebuild watch
 build: stack_build
 	stack exec site -- $@
@@ -9,6 +12,12 @@ watch: stack_build
 .PHONY: stack_build
 stack_build:
 	stack build
+
+.PHONY: update_pdf_links
+update_pdf_links: $(LINKS)
+
+%.pdf:
+	cd pdf && ln -s ../mespubli/pdf/$(shell basename $@) .
 
 push: rebuild
 	git submodule update --remote --merge
@@ -22,4 +31,6 @@ push: rebuild
 	git commit -m 'site update'
 	git push origin master
 
-
+debug:
+	@echo $(LINKS)
+	@echo $(PDFS)
