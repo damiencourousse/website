@@ -2,5 +2,5 @@
 	path = site
 	url = git@github.com:damiencourousse/damiencourousse.github.io.git
 [submodule "submodules/mespubli"]
-	path = submodules/mespubli
+	path = mespubli
 	url = ssh://git@git.courousse.fr/w/mespublis.git
