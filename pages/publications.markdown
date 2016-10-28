@@ -18,6 +18,8 @@ peer-reviewed papers
 
 @WISTP2016:proceedings
 
+@Endo2016:MCSOC
+
 @LeBouder2016
 
 @Barry2016:CS2
