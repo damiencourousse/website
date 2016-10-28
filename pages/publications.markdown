@@ -84,6 +84,8 @@ peer-reviewed papers
 talks and posters
 =================
 
+@Courousse2016:sertif
+
 @Courousse2016:aussois
 
 @Courousse2016:cyberinbretagne
