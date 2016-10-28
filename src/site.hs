@@ -100,8 +100,8 @@ bibtexCompiler bibFile = do
     bib <- load (fromFilePath $ "assets/bib/" ++ bibFile)
     liftM writePandoc
         (getResourceBody >>=
-        preprocessBiblioCompiler bib >>=
-        readPandocBiblio def csl bib)
+         preprocessBiblioCompiler bib >>=
+         readPandocBiblio def csl bib)
 
 preprocessBiblioCompiler :: Item Biblio            -- ^ the biblio references
                          -> Item String            -- ^ the page body
