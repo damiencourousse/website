@@ -16,6 +16,8 @@ date: 2015-02-26
 peer-reviewed papers
 ====================
 
+@Abdellatif2017:CS2
+
 @WISTP2016:proceedings
 
 @Endo2016:MCSOC
