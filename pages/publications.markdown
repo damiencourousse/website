@@ -92,6 +92,8 @@ talks and posters
 
 @Courousse2016:RESSI
 
+@WISG2016
+
 @Courousse2015:IRISA
 
 @Queva2015:IoTsymposiumESWeek
