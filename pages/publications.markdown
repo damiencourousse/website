@@ -82,21 +82,32 @@ peer-reviewed papers
 
 @courousse05:EI05
 
+invited talks
+=============
+
+@Courousse2017:ISSISP
+
+@Courousse2016:sertif
+
+@Courousse2016:cyberinbretagne
+
+@Courousse2015:IRISA
+
+@Courousse2015:LSL
+
 
 talks and posters
 =================
 
-@Courousse2016:sertif
+@DAC2017
+
+@LeBouder2016:CESAR
 
 @Courousse2016:aussois
-
-@Courousse2016:cyberinbretagne
 
 @Courousse2016:RESSI
 
 @WISG2016
-
-@Courousse2015:IRISA
 
 @Queva2015:IoTsymposiumESWeek
 
@@ -105,6 +116,11 @@ talks and posters
 @Courousse2015:CHES
 
 @Courousse2014:CompilationNice
+
+press
+=====
+
+@LeMonde2017
 
 research reports
 ================
@@ -117,3 +133,17 @@ phd thesis
 ==========
 
 @courousse08:PhDThesis
+
+
+patents
+=======
+
+
+@Courousse2013:brevetCrypto
+
+@Noura2014:brevet
+
+@Queva2015:brevetA
+
+@Queva2015:brevetB
+
