@@ -16,7 +16,7 @@ date: 2015-02-26
 peer-reviewed papers
 ====================
 
-@Abdellatif2017:CS2
+[//]: <> (Abdellatif2017:CS2 -- à ajouter plus tard, mais pas en tête de liste.)
 
 @WISTP2016:proceedings
 
