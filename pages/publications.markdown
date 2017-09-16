@@ -85,6 +85,8 @@ peer-reviewed papers
 invited talks
 =============
 
+@WISG17
+
 @Courousse2017:ISSISP
 
 @Courousse2016:sertif
