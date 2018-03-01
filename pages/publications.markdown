@@ -113,6 +113,8 @@ talks and posters
 
 @DAC2017
 
+@EuroLLVM2017
+
 @LeBouder2016:CESAR
 
 @Courousse2016:aussois
