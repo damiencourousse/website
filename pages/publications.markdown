@@ -22,7 +22,7 @@ peer-reviewed papers
 
 @Belleville2017:CPSEd:book
 
-[//]: <> (Abdellatif2017:CS2 -- à ajouter plus tard, mais pas en tête de liste.)
+@Abdellatif2017:CS2
 
 @WISTP2016:proceedings
 
