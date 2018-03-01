@@ -20,6 +20,8 @@ date: 2015-02-26
 peer-reviewed papers
 ====================
 
+@Belleville2017:CPSEd:book
+
 [//]: <> (Abdellatif2017:CS2 -- à ajouter plus tard, mais pas en tête de liste.)
 
 @WISTP2016:proceedings
