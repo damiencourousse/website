@@ -13,6 +13,10 @@ date: 2015-02-26
 - <a href="http://www.researchgate.net/profile/Damien_Courousse">ResearchGate</a>
 </p>
 
+<p style="text-align:center">
+[peer-reviewed papers][peer-reviewed papers] - [invited talks][invited talks] - [talks and posters][talks and posters] - [press][press] - [research reports][research reports] - [phd thesis][phd thesis] - [patents][patents]
+</p>
+
 peer-reviewed papers
 ====================
 
