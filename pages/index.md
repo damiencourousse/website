@@ -9,7 +9,7 @@ I am research engineer at [CEA]-[LIST] in Grenoble.
 
 In a nutshell:
 I am interested in embedded software in its large understanding,
-in particular in compilation and runtime code generation for performance and [security purposes].
+in particular in compilation and runtime code generation for performance and [cyber-security purposes].
 
 Past topics:
 [Cyber-physical systems] dedicated to [human-machine interaction] (otherwise called _haptic systems_).
@@ -26,4 +26,4 @@ Past topics:
 [Grenoble]: http://www.cea.fr/le-cea/les-centres-cea/grenoble
 [Cyber-physical systems]: http://acroe.imag.fr/ergos-technologies
 [human-machine interaction]: http://www.enactive2007.org
-[security purposes]: http://www.cogito-anr.fr
+[cyber-security purposes]: http://www.cogito-anr.fr
