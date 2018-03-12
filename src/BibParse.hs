@@ -136,7 +136,7 @@ parseStr p txt = fromEither $ parse (p <* eof) "" txt
 fromEither :: Either ParseError String -> String
 fromEither e = case e of
     Left err -> show err
-    Right c -> c
+    Right c  -> c
 
 
 -- |
@@ -167,4 +167,3 @@ parseInTextCite p = do
     _ <- string "@"
     k <- many1 $ choice [alphaNum, char ':']
     return $ p (emptyKeyData { key = Just $ "@"++k, keyId = Just k })
-

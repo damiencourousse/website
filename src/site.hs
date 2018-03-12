@@ -1,14 +1,14 @@
 {-# LANGUAGE OverloadedStrings #-}
 
-import Control.Monad (liftM)
-import Data.Maybe (fromMaybe)
-import Data.Monoid ((<>))
-import Hakyll
-import System.Process (readProcess)
-import Text.Pandoc
+import           Control.Monad   (liftM)
+import           Data.Maybe      (fromMaybe)
+import           Data.Monoid     ((<>))
+import           Hakyll
+import           System.Process  (readProcess)
+import           Text.Pandoc
 
-import BibParse
-import GHC.IO.Encoding
+import           BibParse
+import           GHC.IO.Encoding
 
 
 main :: IO ()
@@ -87,7 +87,7 @@ pageCompiler :: Compiler (Item String)
 pageCompiler = do
     bibFile <- getUnderlying >>= (flip getMetadataField "biblio")
     case bibFile of
-         Just f -> bibtexCompiler f
+         Just f  -> bibtexCompiler f
          Nothing -> pandocCompiler
 
 --    Biblio
@@ -149,4 +149,3 @@ lastGitModification = field "lastgitmod" $ \item -> do
   let fp = toFilePath $ itemIdentifier item
   unsafeCompiler $
     readProcess "git" ["log", "-1", "HEAD", "--pretty=format:%ad", "--date=short", fp] ""
-
