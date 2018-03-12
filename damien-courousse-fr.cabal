@@ -15,5 +15,6 @@ executable site
                   , parsec
                   , process
                   , MissingH
+  other-modules:    BibParse
   ghc-options:      -Wall -threaded
   default-language: Haskell2010

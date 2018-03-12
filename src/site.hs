@@ -62,8 +62,6 @@ main = do
         route $ gsubRoute "assets/txt/" (const "")
         compile copyFileCompiler
 
-    tags <- buildTags "posts/*" (fromCapture "tags/*.html")
-
     create ["sitemap.xml"] $ do
         route idRoute
         compile $ do

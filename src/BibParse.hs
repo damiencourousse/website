@@ -4,7 +4,6 @@ module BibParse
 
 import           Control.Applicative ((<*))
 import           Control.Monad       (liftM, liftM2, mplus)
-import           Data.List           (intersperse)
 import           Data.Maybe          (fromMaybe)
 import           Data.String.Utils   (strip)
 import           Text.CSL            hiding (processCitations)
@@ -19,12 +18,6 @@ data KeyData = KeyData { key   :: Maybe String   -- the original key string
 
 newtype Ltext = Ltext String  deriving (Show)
 newtype Url = Url String  deriving (Show)
-
-test :: IO ()
-test = do
-  txt <- readFile "pages/publications.markdown"
-  refs <- readBiblioFile "assets/bib/main.bib"
-  putStrLn $ processCitations refs txt
 
 emptyKeyData :: KeyData
 emptyKeyData = KeyData { key = Nothing
