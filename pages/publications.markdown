@@ -109,6 +109,8 @@ invited talks
 talks and posters
 =================
 
+@JAIF2018:Paris
+
 @Belleville2017:CPSEd:talk
 
 @DAC2017
