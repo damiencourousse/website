@@ -111,6 +111,8 @@ talks and posters
 
 @JAIF2018:Paris
 
+@PHISIC2018
+
 @Belleville2017:CPSEd:talk
 
 @DAC2017
