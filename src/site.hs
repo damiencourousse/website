@@ -77,7 +77,7 @@ feedConfiguration = FeedConfiguration
                   { feedTitle = "Damien Couroussé"
                   , feedDescription = ""
                   , feedAuthorName = "Damien Couroussé"
-                  , feedAuthorEmail = "damien.courousse@gmail.com"
+                  , feedAuthorEmail = "no email"
                   , feedRoot = "http://damien.courousse.fr"
                   }
 
