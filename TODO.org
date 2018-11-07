@@ -1,0 +1,6 @@
+
+* MAYBE à lire: blog post. Hakyll setup and initial customization
+  CLOSED: [2018-11-07 mer. 22:04]
+  - State "MAYBE"      from              [2018-11-07 mer. 22:04]
+
+  https://robertwpearce.com/hakyll-pt-1-setup-and-initial-customization.html
