@@ -1,6 +1,5 @@
 {-# LANGUAGE OverloadedStrings #-}
 
-import           Control.Monad   (liftM)
 import           Data.Maybe      (fromMaybe)
 import           Data.Monoid     ((<>))
 import           Hakyll
@@ -39,7 +38,7 @@ main = do
     -- Static pages
     match ("pages/*.markdown" .||. "pages/*.md" .||. "pages/*.org") $ do
         route $ gsubRoute "pages/" (const "") `composeRoutes` setExtension "html"
-        compile $ do
+        compile $
             pageCompiler
                 >>= loadAndApplyTemplate "templates/default.html" builtPageCtx
                 >>= relativizeUrls
@@ -85,7 +84,7 @@ feedConfiguration = FeedConfiguration
 --    the main page compiler
 pageCompiler :: Compiler (Item String)
 pageCompiler = do
-    bibFile <- getUnderlying >>= (flip getMetadataField "biblio")
+    bibFile <- getUnderlying >>= \i -> getMetadataField i "biblio"
     case bibFile of
          Just f  -> bibtexCompiler f
          Nothing -> pandocCompiler
@@ -93,21 +92,18 @@ pageCompiler = do
 --    Biblio
 bibtexCompiler :: String -> Compiler (Item String)
 bibtexCompiler bibFile = do
-    cslFile <- getUnderlying >>= (flip getMetadataField "csl")
-    csl <- load (fromFilePath $ "assets/csl/" ++ (fromMaybe "chicago.csl" cslFile))
+    cslFile <- getUnderlying >>= \i -> getMetadataField i "csl"
+    csl <- load (fromFilePath $ "assets/csl/" ++ fromMaybe "chicago.csl" cslFile)
     bib <- load (fromFilePath $ "assets/bib/" ++ bibFile)
-    liftM writePandoc
-        (getResourceBody >>=
-         preprocessBiblioCompiler bib >>=
-         readPandocBiblio def csl bib)
+    getResourceBody
+        >>= appendCitations bib
+        >>= readPandocBiblio
+            (def {readerExtensions = pandocExtensions })
+            csl bib
+        >>= \x -> return $ writePandoc x
 
-preprocessBiblioCompiler :: Item Biblio            -- ^ the biblio references
-                         -> Item String            -- ^ the page body
-                         -> Compiler (Item String)
-preprocessBiblioCompiler bib txt = return $ fmap (appendCitation bib) txt
-
-appendCitation :: Item Biblio -> String -> String
-appendCitation bib = processCitations refs
+appendCitations :: Item Biblio -> Item String -> Compiler (Item String)
+appendCitations bib t = pure (processCitations refs <$> t)
     where Biblio refs = itemBody bib
 
 -- Context builders
@@ -127,9 +123,10 @@ postCtx =  dateField "date" "%B %e, %Y"
         <> defaultContext
 
 -- | Extracts git commit info and render some html code for the page footer.
+--
 -- Adapted from
--- Jorge.Israel.Peña at https://github.com/blaenk/blaenk.github.io
--- Miikka Koskinen at http://vapaus.org/text/hakyll-configuration.html
+-- - Jorge.Israel.Peña at https://github.com/blaenk/blaenk.github.io
+-- - Miikka Koskinen at http://vapaus.org/text/hakyll-configuration.html
 gitTag :: Context String
 gitTag = field "gitinfo" $ \item -> do
   let fp = toFilePath $ itemIdentifier item

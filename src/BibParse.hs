@@ -3,7 +3,7 @@ module BibParse
     where
 
 import           Control.Applicative ((<*))
-import           Control.Monad       (liftM, liftM2, mplus)
+import           Control.Monad       (mplus)
 import           Data.Maybe          (fromMaybe)
 import           Data.String.Utils   (strip)
 import           Text.CSL            hiding (processCitations)
@@ -26,13 +26,14 @@ emptyKeyData = KeyData { key = Nothing
                        , links = []
                        }
 
--- TODO voir comment utiliser un Reader Monad pour stocker la liste de refs,
--- [Reference], et éventuellement le type de format de fichier à lire, e.g.
--- Markdown ou OrgMode ou autre.
 
 -- | parse a text string that might contain bibliographic references, extract
 -- some metadata and return the same text, extended with the metadata found in
 -- the input list of references.
+--
+-- MAYBE voir comment utiliser un Reader Monad pour stocker la liste de refs,
+-- [Reference], et éventuellement le type de format de fichier à lire, e.g.
+-- Markdown ou OrgMode ou autre.
 processCitations :: [Reference] -- ^ input bib refs provided by Text.CSL
                  -> String      -- ^ text to parse containing biblio citations
                  -> String
@@ -66,7 +67,7 @@ genCiteMetadata k  = unwords $ [ fromMaybe "key: empty" $ key k
                              -- refs: http://johnmacfarlane.net/pandoc/README.html#citations
                              , "<!-- here follow the markdown metadata -->"
                              ]
-                             ++ (map genHrefs $ links k)
+                             ++ map genHrefs  (links k)
 
 genHrefs :: (Ltext, Url) -> String
 genHrefs (Ltext h, Url u) = "[[" ++ h ++ "](" ++ u ++ ")]"
@@ -81,7 +82,15 @@ parseBibtexNote = do
     return $ union elems
 
 -- | concatenates all the Just fields found. In case of collision, the latest element has precedence
--- FIXME à tester
+--   MAYBE add doctests
+--
+-- memo for mplus
+-- >>> mplus (Just 2) (Just 3) :: Maybe Int
+-- Just 2
+-- >>> mplus (Just 2) Nothing  :: Maybe Int
+-- Just 2
+-- >>> mplus Nothing (Just 2)  :: Maybe Int
+-- Just 2
 union :: [KeyData] -> KeyData
 union = foldr step emptyKeyData
   where
@@ -128,7 +137,7 @@ parseLink  = do
 -- >>> parse parseNotes  "" "a few notes, link=http://url.com"
 -- Right (KeyData {key = Nothing, keyId = Nothing, notes = Just "a few notes", links = []})
 parseNotes :: Parser KeyData
-parseNotes = liftM (\x -> emptyKeyData { notes = Just x }) $ many1 $ noneOf ","
+parseNotes = (\x -> emptyKeyData { notes = Just x }) <$> many1 (noneOf ",")
 
 parseStr :: Parser String -> String -> String
 parseStr p txt = fromEither $ parse (p <* eof) "" txt
@@ -139,9 +148,8 @@ fromEither e = case e of
     Right c  -> c
 
 
--- |
--- parse a page body, extract bibliographic citations,
--- and apply the text transformer to each bibliographic citation found.
+-- | parse a page body, extract bibliographic citations, and apply the
+--   text transformer to each bibliographic citation found.
 --
 -- FIXME the text transformer p should be carried by the Parser monad
 --
@@ -153,7 +161,7 @@ parseCitations p = do
 parsePageElements :: (KeyData -> String) -> Parser String
 parsePageElements p = try (parseCite p)
                     <|> try (parseInTextCite p)
-                    <|> try (liftM2 (:) (noneOf "@") (many $ noneOf "[@"))
+                    <|> try ((:) <$> noneOf "@" <*> many (noneOf "[@"))
 
 parseCite :: (KeyData -> String) -> Parser String
 parseCite p = do
