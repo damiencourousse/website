@@ -20,6 +20,8 @@ date: 2015-02-26
 peer-reviewed papers
 ====================
 
+@TACO2018
+
 @Belleville2017:CPSEd:book
 
 @Abdellatif2017:CS2
