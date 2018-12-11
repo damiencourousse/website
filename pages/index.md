@@ -1,10 +1,10 @@
 ---
 title: damien couroussé
-published: 2015-02-26
 ---
 
 <div class="pure-u-1 pure-u-md-2-3">
 <div class="l-box">
+
 I am research engineer at [CEA]-[LIST] in Grenoble.
 
 In a nutshell:
