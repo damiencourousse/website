@@ -92,6 +92,8 @@ peer-reviewed papers
 invited talks
 =============
 
+@SSPREW2018
+
 @CS22018
 
 @WISG17
