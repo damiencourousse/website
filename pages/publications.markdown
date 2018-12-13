@@ -23,6 +23,9 @@ peer-reviewed papers
 
 @Belleville2017:CPSEd:book
 
+@CESAR2018
+
+
 @Abdellatif2017:CS2
 
 @WISTP2016:proceedings
