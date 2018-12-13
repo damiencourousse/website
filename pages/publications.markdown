@@ -163,11 +163,14 @@ phd thesis
 patents
 =======
 
+@BTCFID2017:brevet
 
-@Courousse2013:brevetCrypto
+@Courousse2016:brevet
 
-@Noura2014:brevet
+@Queva2015:brevetB
 
 @Queva2015:brevetA
 
-@Queva2015:brevetB
+@Noura2014:brevet
+
+@Courousse2013:brevet
