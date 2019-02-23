@@ -34,6 +34,8 @@ peer-reviewed papers
 
 @LeBouder2016
 
+@LeBouder2016:CESAR
+
 @Barry2016:CS2
 
 @Courousse2016:WAPCO
@@ -126,8 +128,6 @@ talks and posters
 @DAC2017
 
 @EuroLLVM2017
-
-@LeBouder2016:CESAR
 
 @Courousse2016:aussois
 
