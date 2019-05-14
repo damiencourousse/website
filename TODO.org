@@ -1,6 +1,28 @@
-
-* MAYBE à lire: blog post. Hakyll setup and initial customization
-  CLOSED: [2018-11-07 mer. 22:04]
+******** MAYBE à lire: blog post. Hakyll setup and initial customization
+    CLOSED: [2018-11-07 mer. 22:04]
   - State "MAYBE"      from              [2018-11-07 mer. 22:04]
 
   https://robertwpearce.com/hakyll-pt-1-setup-and-initial-customization.html
+
+******** TODO éléments pour mettre à jour le site perso
+    :PROPERTIES:
+         :TRIGGER:  chain-find-next(TODO,todo-only)
+         :END:
+
+cf. le site de Karine
+
+Thématiques de recherches :
+
+    Sécurisation de code : schéma de protection et automatisation de l'insertion dans le flot de compilation
+    Analyse de robustesse de code assembleur/binaire par vérification formelle de
+    Optimisation de code
+    Exploitation efficace de many-coeurs
+
+Publications
+
+Projets de recherche
+
+    ANR PROSECCO 2015-2019 (Coordinatrice).
+    ANR MORE 2007-2010 : Multicriteria Optimizations for Real-time Embedded systems.
+
+http://www-soc.lip6.fr/~heydeman/
