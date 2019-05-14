@@ -1,3 +1,20 @@
+* howto
+
+** build
+
+This builds a static website.  All the website files are pushed in the
+subdirectory =_site=.
+#+BEGIN_EXAMPLE
+make
+#+END_EXAMPLE
+
+** push the built website files
+
+The subdirectory =site= is a git submodule.  Its contents are synced
+from the contents of subdirectory =_site=.  The purpose of the =site=
+submodule is to be pushed on remote repository services such as github
+pages, for hosting static websites.
+
 * todo list
 
 ******** TODO éléments pour mettre à jour le site perso
