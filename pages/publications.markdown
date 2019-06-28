@@ -19,6 +19,8 @@ csl: ieee.csl
 peer-reviewed papers
 ====================
 
+@NEWCAS2019
+
 @TACO2019
 
 @Belleville2017:CPSEd:book
@@ -96,6 +98,8 @@ peer-reviewed papers
 
 invited talks
 =============
+
+@LID2019
 
 @SSPREW2018
 
