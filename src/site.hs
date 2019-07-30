@@ -2,6 +2,7 @@
 
 import           Data.Maybe      (fromMaybe)
 import           Data.Monoid     ((<>))
+import qualified Data.Text       as T
 import           Hakyll
 import           System.Process  (readProcess)
 import           Text.Pandoc
@@ -40,10 +41,16 @@ main = do
             >>= relativizeUrls
 
     -- Static pages
+    match ("pages/publications.markdown") $ do
+        route $ gsubRoute "pages/" (const "") `composeRoutes` setExtension "html"
+        compile $
+            publiCompiler
+                >>= loadAndApplyTemplate "templates/default.html" builtPageCtx
+                >>= relativizeUrls
     match ("pages/*.markdown" .||. "pages/*.md" .||. "pages/*.org") $ do
         route $ gsubRoute "pages/" (const "") `composeRoutes` setExtension "html"
         compile $
-            pageCompiler
+            pandocIOCompiler
                 >>= loadAndApplyTemplate "templates/default.html" builtPageCtx
                 >>= relativizeUrls
 
@@ -60,7 +67,7 @@ main = do
 
     match "templates/*" $ compile templateCompiler
 
-    -- robots, etc.
+    -- robots, sitemap, etc.
     match "assets/txt/*" $ do
         route $ gsubRoute "assets/txt/" (const "")
         compile copyFileCompiler
@@ -86,12 +93,51 @@ feedConfiguration = FeedConfiguration
 
 -- Auxiliary compilers
 --    the main page compiler
-pageCompiler :: Compiler (Item String)
-pageCompiler = do
+publiCompiler :: Compiler (Item String)
+publiCompiler = do
     bibFile <- getUnderlying >>= \i -> getMetadataField i "biblio"
     case bibFile of
          Just f  -> bibtexCompiler f
          Nothing -> pandocCompiler
+
+--    with the full pandoc instead of 'PandocPure'
+pandocIOCompiler :: Compiler (Item String)
+pandocIOCompiler = writePandoc <$> (getResourceBody >>= readPandocIOWith def)
+
+-- Hakyll's version of 'readPandoc', but replacing the pure instance
+-- of 'PandocMonad' with the one running in 'IO'.  'PandocPure' does
+-- not support all pandoc functionalities, in particular, org
+-- includes.
+-- https://github.com/jaspervdj/hakyll/issues/635
+readPandocIOWith
+  :: ReaderOptions -- ^ Parser options
+  -> Item String -- ^ String to read
+  -> Compiler (Item Pandoc) -- ^ Resulting document
+readPandocIOWith ropt item =
+  unsafeCompiler $
+  runIO (traverse (reader ropt (itemFileType item)) (fmap T.pack item)) >>=
+  \x -> case x of
+    Left err ->
+      fail $ "Hakyll.Web.Pandoc.readPandocWith: parse failed: " ++ show err
+    Right item' -> return item'
+  where
+    reader ro t =
+      case t of
+        DocBook -> readDocBook ro
+        Html -> readHtml ro
+        LaTeX -> readLaTeX ro
+        LiterateHaskell t' -> reader (addExt ro Ext_literate_haskell) t'
+        Markdown -> readMarkdown ro
+        MediaWiki -> readMediaWiki ro
+        OrgMode -> readOrg ro
+        Rst -> readRST ro
+        Textile -> readTextile ro
+        _ ->
+          error $
+          "Hakyll.Web.readPandocWith: I don't know how to read a file of " ++
+          "the type " ++ show t ++ " for: " ++ show (itemIdentifier item)
+    addExt ro e =
+      ro {readerExtensions = enableExtension e $ readerExtensions ro}
 
 --    Biblio
 bibtexCompiler :: String -> Compiler (Item String)

@@ -14,6 +14,7 @@ executable site
                   , pandoc-citeproc
                   , parsec
                   , process
+                  , text
                   , MissingH
   other-modules:    BibParse
   ghc-options:      -Wall -threaded
