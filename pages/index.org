@@ -1,0 +1,35 @@
+---
+title: damien couroussé
+---
+
+#+begin_export html
+<div class="pure-u-1 pure-u-md-2-3">
+<div class="l-box">
+#+end_export
+
+I am research engineer at
+[[http://www.cea.fr/technologies][CEA]]-[[http://www-list.cea.fr][LIST]]
+in
+[[http://www.cea.fr/le-cea/les-centres-cea/grenoble][Grenoble]].
+
+In a nutshell:
+I am interested in embedded software in its large understanding,
+in particular in compilation and runtime code generation for performance and
+[[http://www.cogito-anr.fr][cyber-security purposes]].
+
+Past topics:
+[[http://acroe.imag.fr/ergos-technologies][Cyber-physical systems]]
+dedicated to
+ [[http://www.enactive2007.org][human-machine interaction]]
+(otherwise called _haptic systems_).
+
+#+begin_export html
+</div>
+</div>
+#+end_export
+
+#+begin_export html
+<div class="pure-u-1 pure-u-md-7-24">
+<img class="pure-img" src="/images/damien.jpg" alt="Damien Couroussé" style="padding=1em; width: 200px;" />
+</div>
+#+end_export
