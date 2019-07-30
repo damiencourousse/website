@@ -19,15 +19,14 @@ main = do
   hakyll $ do
 
     -- static content
-    mapM_ (`match` (route idRoute >> compile copyFileCompiler))
-          [ "assets/js/*"
-          , "images/*"
-          , "media/*"
-          , "pdf/*"
-          , "CNAME" ]
+    match ( "assets/js/*" .||. "images/*" .||. "media/*" .||. "pdf/*"
+            .||. "CNAME"
+          ) $ do
+      route idRoute
+      compile copyFileCompiler
     match "assets/css/*" $ do
-        route   idRoute
-        compile compressCssCompiler
+      route   idRoute
+      compile compressCssCompiler
 
     -- Bibtex entries (for bibliography)
     match "assets/bib/*" $ compile biblioCompiler
