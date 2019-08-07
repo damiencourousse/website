@@ -1,0 +1,45 @@
+/* image orientation from exif info  */
+.img {
+    image-orientation: from-image;
+}
+.pure-img {
+    image-orientation: from-image;
+}
+
+/* Source: https://www.sylvaindurand.fr/overlay-image-in-pure-css */
+.overlay {
+  position: fixed;
+  z-index: 1999;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  background: rgba(0,0,0,0.9);
+  opacity: 0;
+  transition: opacity .3s;
+  visibility: hidden;
+}
+.overlay img{
+  max-width: 90%;
+  max-height: 90%;
+  width: auto;
+  transform: scale(0.95);
+  transition: transform .3s;
+  margin: auto;
+}
+.overlay:target {
+  outline: none;
+  visibility: visible;
+  cursor: default;
+  opacity: 1;
+}
+.overlay:target img {
+    transform: scale(1);
+}
+.center-inner {
+    margin-left: auto;
+    margin-right: auto;
+}

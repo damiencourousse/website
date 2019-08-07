@@ -1,0 +1,27 @@
+$for(photos-small)$
+<p>
+  <a href="#img-$id$"
+      $if(alt)$
+      title="$alt$"
+      $endif$
+     >
+    <img
+      class="pure-img center-inner"
+      src="$url$"
+      $if(alt)$
+      alt="$alt$"
+      $endif$
+      >
+  </a>
+</p>
+$endfor$
+
+$for(photos)$
+  <a href="#_" class="overlay" id="img-$id$">
+    <img class="pure-img" src="$url$"
+      $if(alt)$
+      alt="$alt$"
+      $endif$
+         >
+  </a>
+$endfor$

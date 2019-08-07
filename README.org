@@ -1,5 +1,12 @@
 * howto
 
+** setup
+
+Image processing relies on the binary program =convert=, from
+=imagemagick=.  The built program that generates the static website
+assumes that the binary =convert= is available somewhere in user's
+path; it will crash without warning if it is not the case!
+
 ** build
 
 This builds a static website.  All the website files are pushed in the
@@ -7,7 +14,6 @@ subdirectory =_site=.
 #+BEGIN_EXAMPLE
 make
 #+END_EXAMPLE
-
 ** push the built website files
 
 The subdirectory =site= is a git submodule.  Its contents are synced
@@ -15,10 +21,10 @@ from the contents of subdirectory =_site=.  The purpose of the =site=
 submodule is to be pushed on remote repository services such as github
 pages, for hosting static websites.
 
-* todo list
+* todos list
 
 ******** TODO bio synthétique et efficace
-         :PROPERTIES:
+    :PROPERTIES:
          :TRIGGER:  chain-find-next(TODO,todo-only)
          :END:
          - State "MAYBE"      from              [2019-05-16 jeu. 22:02]
@@ -67,6 +73,98 @@ https://alastairreid.github.io/activities/
   - State "MAYBE"      from              [2018-11-07 mer. 22:04]
 
   https://robertwpearce.com/hakyll-pt-1-setup-and-initial-customization.html
+
+** gallerie
+
+******** DONE intégrer les modifications de templates (index.html) à la branche master
+    CLOSED: [2019-07-31 mer. 09:24]
+    :PROPERTIES:
+         :TRIGGER:  chain-find-next(TODO,todo-only)
+         :END:
+         - State "DONE"       from "TODO"       [2019-07-31 mer. 09:24]
+
+******** DONE intégrer les modifications -> index.org à la branche master
+    CLOSED: [2019-07-31 mer. 09:24]
+    :PROPERTIES:
+         :TRIGGER:  chain-find-next(TODO,todo-only)
+         :END:
+
+         - State "DONE"       from "TODO"       [2019-07-31 mer. 09:24]
+
+******** DONE une première implémentation simple mais fonctionnelle
+    CLOSED: [2019-07-30 mar. 17:34]
+    :PROPERTIES:
+   :TRIGGER:  chain-find-next(TODO,todo-only)
+   :END:
+    - State "DONE"       from "TODO"       [2019-07-30 mar. 17:34]
+
+******** DONE demander des éclaircissements,  cf. l'historique git
+    CLOSED: [2019-07-30 mar. 16:22]
+    :PROPERTIES:
+         :TRIGGER:  chain-find-next(TODO,todo-only)
+         :END:
+
+    - State "DONE"       from "TODO"       [2019-07-30 mar. 16:22]
+- loadAll vs. Context String
+- pathField n'est pas défini pour un Context CopyFile
+  - [ERROR] Missing field $path$ in context for item images/expressions-urbaines/IMG_6139.JPG
+  - avec ce code:
+
+#+begin_src haskell
+        photos <- loadAll "images/expressions-urbaines/*"
+        photoTpl <- loadBody "templates/photo.html"
+        let imageCtx :: Context CopyFile
+            imageCtx = urlField "url"
+                       <> missingField
+#+end_src
+
+******** DONE bug fix: built page ctx
+    CLOSED: [2019-07-31 mer. 14:20]
+    :PROPERTIES:
+         :TRIGGER:  chain-find-next(TODO,todo-only)
+         :END:
+         - State "DONE"       from "TODO"       [2019-07-31 mer. 14:20]
+
+******** DONE support des fichiers =*.JPG=.  intégrer mes modifs à la bibq hakyll-images
+    CLOSED: [2019-08-03 sam. 11:49]
+    :PROPERTIES:
+         :TRIGGER:  chain-find-next(TODO,todo-only)
+         :END:
+
+         - State "DONE"       from "TODO"       [2019-08-03 sam. 11:49]
+
+******** DONE rapport de bug -> hakyll-images. l'orientation des images n'est pas préservée
+         CLOSED: [2019-08-05 lun. 23:27]
+    :PROPERTIES:
+         :TRIGGER:  chain-find-next(TODO,todo-only)
+         :END:
+
+    - State "DONE"       from "TODO"       [2019-08-05 lun. 23:27]
+c'est la transformation via hakyll-images qui ne préserve pas
+l'orientation des images.  je suppose que toutes les metadata exif
+sont perdues.
+
+******** DONE l'orientation des images n'est pas préservée
+         CLOSED: [2019-08-05 lun. 23:27]
+    :PROPERTIES:
+         :TRIGGER:  chain-find-next(TODO,todo-only)
+         :END:
+
+    - State "DONE"       from "TODO"       [2019-08-05 lun. 23:27]
+c'est la transformation via hakyll-images qui ne préserve pas
+l'orientation des images.  je suppose que toutes les metadata exif
+sont perdues.
+******** MAYBE pouvoir associer du texte à chaque photo (avant / après / dans les Alt)
+
+         - State "MAYBE"      from "TODO"       [2019-08-05 lun. 23:27]
+         - State "MAYBE"      from "TODO"       [2019-08-03 sam. 11:49]
+         - State "MAYBE"      from "TODO"       [2019-07-31 mer. 14:20]
+         - State "MAYBE"      from "TODO"       [2019-07-31 mer. 09:24]
+         - State "MAYBE"      from "TODO"       [2019-07-30 mar. 00:25]
+
+******** MAYBE modulariser pour en faire une bibliothèque exportable dans d'autres projets
+
+         - State "MAYBE"      from "TODO"       [2019-07-30 mar. 00:26]
 
 ** biblio refs
 
