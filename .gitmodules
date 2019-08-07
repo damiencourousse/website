@@ -3,4 +3,7 @@
 	url = git@github.com:damiencourousse/damiencourousse.github.io.git
 [submodule "submodules/mespubli"]
 	path = mespubli
-	url = ssh://git@git.courousse.fr/w/mespublis.git
+	url = ../w/mespublis.git
+[submodule "images/expressions-urbaines"]
+	path = images/expressions-urbaines
+	url = ../expressions-urbaines
