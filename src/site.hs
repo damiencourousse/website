@@ -174,7 +174,7 @@ readPandocIOWith
 readPandocIOWith ropt item =
   unsafeCompiler $
   runIO (traverse (reader ropt (itemFileType item)) (fmap T.pack item)) >>=
-  \x -> case x of
+  \case
     Left err ->
       fail $ "Hakyll.Web.Pandoc.readPandocWith: parse failed: " ++ show err
     Right item' -> return item'
@@ -257,9 +257,7 @@ gitCommitDateWith f = gitLogWith f "lastgitmod" "%aD"
 mdateFile
   :: String -- ^ the context key
   -> Context a
-mdateFile key = field key $ \item -> unsafeCompiler $ do
-  let fp = toFilePath $ itemIdentifier item
-  Process.readProcess "stat" ["-c", "'%y'", fp] ""
+mdateFile key = field key mdate
 
 -- | last modification date of the file targeted by an item
 mdate
