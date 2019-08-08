@@ -30,6 +30,7 @@ push: rebuild
 	git add site
 	git commit -m 'site update'
 	git push origin master
+	git push github master
 
 debug:
 	@echo $(LINKS)
