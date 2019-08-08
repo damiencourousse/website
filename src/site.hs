@@ -30,9 +30,7 @@ main = do
   hakyll $ do
 
     -- static content
-    match ( "assets/js/*" .||. "images/*" .||. "media/*" .||. "pdf/*"
-            .||. "CNAME"
-          ) $ do
+    match ( "assets/js/*" .||. "images/*" .||. "media/*" .||. "pdf/*" ) $ do
       route idRoute
       compile copyFileCompiler
     match "assets/css/*" $ do
@@ -128,7 +126,7 @@ main = do
     -- templates
     match "templates/*" $ compile templateCompiler
 
-    -- robots, sitemap, etc.
+    -- CNAME, robots.txt, etc.
     match "assets/txt/*" $ do
         route $ gsubRoute "assets/txt/" (const "")
         compile copyFileCompiler
