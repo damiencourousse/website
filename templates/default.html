@@ -72,22 +72,24 @@
             and <a href="https://pandoc.org">pandoc</a>
           </p>
 
-          $if(lastgitmod)$
           <p style="text-align:center; font-size:75%">
+            $if(gitdate)$
             <a href=https://github.com/damiencourousse/website/commits/master>
-              Page last modified $lastgitmod$
+              Page last modified
+              $if(gitcommit)$
+              by commit $gitcommit$,
+              $endif$
+              $gitdate$
             </a>
+            $endif$
           </p>
-          $endif$
           <br>
         </div>
       </footer>
 
-		</div> <!-- /layout -->
-
     </div> <!-- /layout -->
 
-    <script src="/assets/js/ui.js"></script>
+<script src="/assets/js/ui.js"></script>
 
-  </body>
+</body>
 </html>

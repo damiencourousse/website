@@ -3,7 +3,7 @@
 $for(entries)$
     <url>
         <loc>$siteroot$$url$</loc>
-        <lastmod>$lastgitmod$</lastmod>
+        <lastmod>$gitdate$</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>

@@ -117,7 +117,8 @@ main = do
           >>= loadAndApplyTemplate "templates/default.html"
               -- the git date info is extracted for the directory
               -- containing the input images
-              (gitCommitDateWith (const "images/expressions-urbaines")
+              (gitDate' (const "images/expressions-urbaines")
+               <> gitCommit' (const "images/expressions-urbaines")
                <> constField "title" "expressions urbaines"
                <> builtPageCtx)
           >>= relativizeUrls
@@ -132,11 +133,9 @@ main = do
         compile copyFileCompiler
 
     create ["sitemap.xml"] $ do
-        route idRoute
-        compile $ do
-          let sitemapCtx = builtPageCtx <> gitCommitDate
-          makeItem ""
-            >>= loadAndApplyTemplate "templates/sitemap.xml" sitemapCtx
+      route idRoute
+      compile $
+        makeItem "" >>= loadAndApplyTemplate "templates/sitemap.xml" builtPageCtx
 
 feedConfiguration :: FeedConfiguration
 feedConfiguration = FeedConfiguration
@@ -221,7 +220,7 @@ builtPageCtx =  constField "siteroot" (feedRoot feedConfiguration)
              <> listField "entries" builtPageCtx (loadAll $ "pages/*" .||. "posts/*")
              <> dateField "date" "%A, %e %B %Y"
              <> dateField "isodate" "%F"
-             <> gitCommitDate
+             <> gitDate <> gitCommit
              <> defaultContext
 
 postCtx :: Context String
@@ -231,27 +230,35 @@ postCtx =  dateField "date" "%B %e, %Y"
         <> defaultContext
 
 
--- | Extracts git commit info
---
--- Adapted from
--- - Jorge.Israel.Peña at https://github.com/blaenk/blaenk.github.io
--- - Miikka Koskinen at http://vapaus.org/text/hakyll-configuration.html
-gitLogWith
-  :: (Item a -> FilePath)
-  -> String -- ^ the @Context@ key
-  -> String  -- ^ format argument to option @--pretty@ of @git log@
+-- | Extracts git commit info for the current Item
+gitInfo
+  :: String -- ^ the Context key
+  -> String -- ^ the git log format string
   -> Context a
-gitLogWith f key format = field key $
-  \item -> unsafeCompiler $
-    Process.readProcess "git" ["log", "-1", "HEAD", "--pretty=format:" ++ format, f item] ""
+gitInfo  = gitInfo' (toFilePath . itemIdentifier)
 
--- | Extract the git commit date of the file sourcing the targeted Item (context field: @lastgitmod@).
-gitCommitDate :: Context a
-gitCommitDate = gitLogWith (toFilePath . itemIdentifier) "lastgitmod" "%aD"
+gitInfo'
+  :: (Item a -> FilePath) -- ^ a function that returns the path used for retrieving git info
+  -> String -- ^ the Context key
+  -> String -- ^ the git log format string
+  -> Context a
+gitInfo' f key logFormat = field key $ \item -> do
+  unsafeCompiler $
+    Process.readProcess "git" ["log", "-1", "HEAD", "--pretty=format:" ++ logFormat, f item] ""
 
--- | Extract the git commit date of the target file (context field: @lastgitmod@).
-gitCommitDateWith :: (Item a -> FilePath) -> Context a
-gitCommitDateWith f = gitLogWith f "lastgitmod" "%aD"
+-- | Extract the git commit date of the file sourcing the targeted
+--   Item (context field: @gitdate@).
+gitDate :: Context a
+gitDate = gitDate' (toFilePath . itemIdentifier)
+gitDate' :: (Item a -> FilePath) -> Context a
+gitDate' f = gitInfo' f "gitdate" "%aD"
+
+-- | Extract the git commit hash (short format) of the file sourcing
+--   the targeted Item (context field: @gitcommit@).
+gitCommit :: Context a
+gitCommit = gitCommit' (toFilePath . itemIdentifier)
+gitCommit' :: (Item a -> FilePath) -> Context a
+gitCommit' f = gitInfo' f "gitcommit" "%h"
 
 -- | last modification date of the file targeted by an item
 mdateFile
