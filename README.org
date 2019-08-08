@@ -68,11 +68,10 @@ http://www-soc.lip6.fr/~heydeman/
 
 https://alastairreid.github.io/activities/
 
-******** MAYBE à lire: blog post. Hakyll setup and initial customization
-    CLOSED: [2018-11-07 mer. 22:04]
-  - State "MAYBE"      from              [2018-11-07 mer. 22:04]
+******** MAYBE sitemap.xml ne contient pas les refs vers les pages générées (e.g. via la fonction =create=)
+         CLOSED: [2019-08-08 jeu. 17:30]
 
-  https://robertwpearce.com/hakyll-pt-1-setup-and-initial-customization.html
+         - State "MAYBE"      from              [2019-08-08 jeu. 17:30]
 
 ** gallerie
 
@@ -154,8 +153,9 @@ sont perdues.
 c'est la transformation via hakyll-images qui ne préserve pas
 l'orientation des images.  je suppose que toutes les metadata exif
 sont perdues.
-******** MAYBE pouvoir associer du texte à chaque photo (avant / après / dans les Alt)
+******** DONE pouvoir associer du texte à chaque photo (avant / après / dans les Alt)
 
+         - State "DONE"       from "MAYBE"      [2019-08-08 jeu. 17:31]
          - State "MAYBE"      from "TODO"       [2019-08-05 lun. 23:27]
          - State "MAYBE"      from "TODO"       [2019-08-03 sam. 11:49]
          - State "MAYBE"      from "TODO"       [2019-07-31 mer. 14:20]
