@@ -7,7 +7,7 @@ csl: ieee.csl
 
 <p style="text-align:center">
   <a href="https://hal.archives-ouvertes.fr/search/index/q/*/authFullName_s/Damien+Courouss%C3%A9">Archive ouverte HAL</a>
-- <a href="http://dblp.uni-trier.de/pers/hd/c/Courouss=eacute=:Damien?q=damien+courouss%C3%A9">dblp</a>
+- <a href="https://dblp.uni-trier.de/pers/hd/c/Courouss=eacute=:Damien">dblp</a>
 - <a href="http://scholar.google.fr/citations?user=obHNKMEAAAAJ">google Scholar</a>
 - <a href="http://www.researchgate.net/profile/Damien_Courousse">ResearchGate</a>
 </p>
