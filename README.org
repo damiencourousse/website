@@ -61,6 +61,16 @@ Projets de recherche
     ANR MORE 2007-2010 : Multicriteria Optimizations for Real-time Embedded systems.
 
 http://www-soc.lip6.fr/~heydeman/
+******** TODO cleanup. side-menu.css
+         :PROPERTIES:
+         :TRIGGER:  chain-find-next(TODO,todo-only)
+         :END:
+
+le fichier =side-menu.css= semble nécessaire pour avoir un layout
+correct (cf. site de JAIF), même quand on n'utilise pas un side menu.
+Bref, il doit y avoir dans ce fichier des settings css qui devraient
+se trouver ailleurs.
+in fine, après ménage, il est peut-être possible de virer ce fichier css.
 
 ******** MAYBE exemple pour la liste des projets
     CLOSED: [2019-05-04 sam. 15:10]
