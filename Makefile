@@ -26,7 +26,7 @@ push: rebuild
 		&& git checkout master \
 		&& git add . \
 		&& GIT_AUTHOR_EMAIL='3405965+damiencourousse@users.noreply.github.com' git commit -m 'site update' \
-		&& git push origin master
+		&& git push --recurse-submodules=check origin master
 	git add site
 	git commit -m 'site update'
 	git push origin master
