@@ -1,0 +1,40 @@
+---
+title: Suggestions for improving your LaTeX documents
+---
+
+Use a spell checker
+
+Use a grammar checker
+
+Some frequent LaTeX mistakes:
+   + Add an insecable space (=~=) in front of most =\cite{...}=.  For
+     example: =Warren~\cite{Warren1965} was the first to...=.
+
+If you use a version control system, e.g., =git=:
+   + Write each sentence /on a single text line/.
+     + A long text line probably indicates that the sentence is too long
+       and needs to be written differently.
+     + It helps to keep track of word changes accross revisions.
+   + Don't use your editor's reformatting tools.
+     + For example, considering this short example:
+#+begin_example
+This section presents the existing works that investigate approaches
+to evaluate...
+#+end_example
+     ...  Adding the word /new/ to the sentence, combined with editor reformating,  modifies /two/ text lines where a single word modification was done in the text.
+#+begin_example
+This section presents the existing works that investigate new
+approaches to evaluate...
+#+end_example
+
+Typography:
+   + For the French typography, read the [[https://catalogue.bnf.fr/ark:/12148/cb38887921n.public][Lexique des règles typographiques en usage à l'Imprimerie nationale]].
+     + French uses insecable spaces before many punctuations,
+       e.g., =?=, =!=, =:=, =;=, =»= (hence, also after =«=).
+       + For example: =«~Salut, la compagnie~!~»=
+
+   + For the English typography and many other topics related to writing,
+     read the [[https://www.pearson.com/us/higher-education/product/Fowler-Little-Brown-Handbook-The-14th-Edition/9780134759722.html][Little, Brown Handbook]].
+     + English does /not/ use insecable spaces before punctuation
+       marks.
+       + For example: ="Hello, World!"=
