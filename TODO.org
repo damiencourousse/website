@@ -1,0 +1,186 @@
+* todos list
+
+******** TODO bio synthétique et efficace
+    :PROPERTIES:
+         :TRIGGER:  chain-find-next(TODO,todo-only)
+         :END:
+         - State "MAYBE"      from              [2019-05-16 jeu. 22:02]
+
+une bio synthétique et efficace.
+
+I am a security researcher. I am working as a full-time researcher (Chargée de Recherche) for CNRS, at IRISA (Rennes, France), in the EMSEC team.
+
+Previsouly, I worked as a postdoctoral researcher in the Secure Systems group at the Graz University of Technology, Institute of Applied Information Processing and Communications, in Austria. I obtained my PhD from Telecom ParisTech in October 2015 while working at Technicolor in Rennes, jointly with the S3 group of Eurecom in Sophia Antipolis.
+
+Among other topics, I am interested in microarchitectural covert and side channels in commodity computers and servers, reverse-engineering processor parts, virtualization security and fingerprinting everything.
+
+https://cmaurice.fr/
+
+******** TODO activités de recherche, en quelques mots
+    :PROPERTIES:
+         :TRIGGER:  chain-find-next(TODO,todo-only)
+         :END:
+
+    - Intérêts de recherche
+    - Activités de recherche en cours
+
+exemple ici : https://convecs.inria.fr/people/Wendelin.Serwe/index-f.html
+
+******** TODO éléments pour mettre à jour le site perso
+    :PROPERTIES:
+         :TRIGGER:  chain-find-next(TODO,todo-only)
+         :END:
+
+cf. le site de Karine
+
+Thématiques de recherches :
+
+    Sécurisation de code : schéma de protection et automatisation de l'insertion dans le flot de compilation
+    Analyse de robustesse de code assembleur/binaire par vérification formelle de
+    Optimisation de code
+    Exploitation efficace de many-coeurs
+
+Publications
+
+Projets de recherche
+
+    ANR PROSECCO 2015-2019 (Coordinatrice).
+    ANR MORE 2007-2010 : Multicriteria Optimizations for Real-time Embedded systems.
+
+http://www-soc.lip6.fr/~heydeman/
+
+******** TODO cleanup. side-menu.css
+    :PROPERTIES:
+         :TRIGGER:  chain-find-next(TODO,todo-only)
+         :END:
+
+le fichier =side-menu.css= semble nécessaire pour avoir un layout
+correct (cf. site de JAIF), même quand on n'utilise pas un side menu.
+Bref, il doit y avoir dans ce fichier des settings css qui devraient
+se trouver ailleurs.
+in fine, après ménage, il est peut-être possible de virer ce fichier css.
+
+******** MAYBE exemple pour la liste des projets
+    CLOSED: [2019-05-04 sam. 15:10]
+         - State "MAYBE"      from              [2019-05-04 sam. 15:10]
+
+https://alastairreid.github.io/activities/
+
+******** MAYBE sitemap.xml ne contient pas les refs vers les pages générées (e.g. via la fonction =create=)
+    CLOSED: [2019-08-08 jeu. 17:30]
+
+         - State "MAYBE"      from              [2019-08-08 jeu. 17:30]
+
+** gallerie
+
+******** DONE intégrer les modifications de templates (index.html) à la branche master
+    CLOSED: [2019-07-31 mer. 09:24]
+    :PROPERTIES:
+         :TRIGGER:  chain-find-next(TODO,todo-only)
+         :END:
+         - State "DONE"       from "TODO"       [2019-07-31 mer. 09:24]
+
+******** DONE intégrer les modifications -> index.org à la branche master
+    CLOSED: [2019-07-31 mer. 09:24]
+    :PROPERTIES:
+         :TRIGGER:  chain-find-next(TODO,todo-only)
+         :END:
+
+         - State "DONE"       from "TODO"       [2019-07-31 mer. 09:24]
+
+******** DONE une première implémentation simple mais fonctionnelle
+    CLOSED: [2019-07-30 mar. 17:34]
+    :PROPERTIES:
+   :TRIGGER:  chain-find-next(TODO,todo-only)
+   :END:
+    - State "DONE"       from "TODO"       [2019-07-30 mar. 17:34]
+
+******** DONE demander des éclaircissements,  cf. l'historique git
+    CLOSED: [2019-07-30 mar. 16:22]
+    :PROPERTIES:
+         :TRIGGER:  chain-find-next(TODO,todo-only)
+         :END:
+
+    - State "DONE"       from "TODO"       [2019-07-30 mar. 16:22]
+- loadAll vs. Context String
+- pathField n'est pas défini pour un Context CopyFile
+  - [ERROR] Missing field $path$ in context for item images/expressions-urbaines/IMG_6139.JPG
+  - avec ce code:
+
+#+begin_src haskell
+        photos <- loadAll "images/expressions-urbaines/*"
+        photoTpl <- loadBody "templates/photo.html"
+        let imageCtx :: Context CopyFile
+            imageCtx = urlField "url"
+                       <> missingField
+#+end_src
+
+******** DONE bug fix: built page ctx
+    CLOSED: [2019-07-31 mer. 14:20]
+    :PROPERTIES:
+         :TRIGGER:  chain-find-next(TODO,todo-only)
+         :END:
+         - State "DONE"       from "TODO"       [2019-07-31 mer. 14:20]
+
+******** DONE support des fichiers =*.JPG=.  intégrer mes modifs à la bibq hakyll-images
+    CLOSED: [2019-08-03 sam. 11:49]
+    :PROPERTIES:
+         :TRIGGER:  chain-find-next(TODO,todo-only)
+         :END:
+
+         - State "DONE"       from "TODO"       [2019-08-03 sam. 11:49]
+
+******** DONE rapport de bug -> hakyll-images. l'orientation des images n'est pas préservée
+    CLOSED: [2019-08-05 lun. 23:27]
+    :PROPERTIES:
+         :TRIGGER:  chain-find-next(TODO,todo-only)
+         :END:
+
+    - State "DONE"       from "TODO"       [2019-08-05 lun. 23:27]
+c'est la transformation via hakyll-images qui ne préserve pas
+l'orientation des images.  je suppose que toutes les metadata exif
+sont perdues.
+
+******** DONE l'orientation des images n'est pas préservée
+    CLOSED: [2019-08-05 lun. 23:27]
+    :PROPERTIES:
+         :TRIGGER:  chain-find-next(TODO,todo-only)
+         :END:
+
+    - State "DONE"       from "TODO"       [2019-08-05 lun. 23:27]
+c'est la transformation via hakyll-images qui ne préserve pas
+l'orientation des images.  je suppose que toutes les metadata exif
+sont perdues.
+
+******** DONE pouvoir associer du texte à chaque photo (avant / après / dans les Alt)
+
+         - State "DONE"       from "MAYBE"      [2019-08-08 jeu. 17:31]
+         - State "MAYBE"      from "TODO"       [2019-08-05 lun. 23:27]
+         - State "MAYBE"      from "TODO"       [2019-08-03 sam. 11:49]
+         - State "MAYBE"      from "TODO"       [2019-07-31 mer. 14:20]
+         - State "MAYBE"      from "TODO"       [2019-07-31 mer. 09:24]
+         - State "MAYBE"      from "TODO"       [2019-07-30 mar. 00:25]
+
+******** MAYBE modulariser pour en faire une bibliothèque exportable dans d'autres projets
+
+         - State "MAYBE"      from "TODO"       [2019-07-30 mar. 00:26]
+
+** biblio refs
+
+******** MAYBE expand abstracts - show abstracts and citations
+    CLOSED: [2018-08-13 lun. 10:48]
+    :PROPERTIES:
+  :TRIGGER:  chain-find-next(TODO,todo-only,from-bottom)
+  :END:
+  - State "MAYBE"      from "TODO"       [2018-08-13 lun. 10:48]
+
+voir par exemple le site de Neil Mitchell
+
+https://ndmitchell.com/
+
+voir aussi le petit coup de javaScript pour afficher tous les
+abstracts et citations.  =Show all abstracts or citations.=
+
+les sources de son site perso :
+- https://github.com/ndmitchell/website
+- https://github.com/ndmitchell/shake-website
