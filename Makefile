@@ -19,7 +19,7 @@ update_pdf_links: $(LINKS)
 %.pdf:
 	cd pdf && ln -s ../mespubli/pdf/$(shell basename $@) .
 
-push: rebuild
+deploy: rebuild
 	git submodule update --remote --merge
 	rsync -avr --delete --exclude='.git'  _site/ site/
 	cd site \
