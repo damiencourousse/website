@@ -143,7 +143,7 @@ feedConfiguration = FeedConfiguration
                   , feedDescription = ""
                   , feedAuthorName = "Damien Couroussé"
                   , feedAuthorEmail = "no email"
-                  , feedRoot = "http://damien.courousse.fr"
+                  , feedRoot = "https://damien.courousse.fr"
                   }
 
 -- * Auxiliary compilers
