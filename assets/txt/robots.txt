@@ -1,2 +1,2 @@
 User-agent: *
-Sitemap: http://damien.courousse.fr/sitemap.xml
+Sitemap: https://damien.courousse.fr/sitemap.xml
