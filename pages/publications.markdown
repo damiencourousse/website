@@ -172,6 +172,8 @@ phd thesis
 patents
 =======
 
+@Courousse2017:brevet
+
 @BTCFID2017:brevet
 
 @Courousse2016:brevet
