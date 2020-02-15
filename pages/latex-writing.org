@@ -1,40 +1,99 @@
----
+﻿---
 title: Suggestions for improving your LaTeX documents
 ---
 
-Use a spell checker
+** Writing style
 
-Use a grammar checker
+There are many good resources about writing style.
+My writings are probably not exemplary with regards to writing style, but I suggest here a few things that are not given enough care.
 
-Some frequent LaTeX mistakes:
-   + Add an insecable space (=~=) in front of most =\cite{...}=.  For
-     example: =Warren~\cite{Warren1965} was the first to...=.
+I recommend these two excellent books, frequently re-edited and revised:
 
-If you use a version control system, e.g., =git=:
-   + Write each sentence /on a single text line/.
-     + A long text line probably indicates that the sentence is too long
-       and needs to be written differently.
-     + It helps to keep track of word changes accross revisions.
-   + Don't use your editor's reformatting tools.
-     + For example, considering this short example:
-#+begin_example
-This section presents the existing works that investigate approaches
-to evaluate...
-#+end_example
-     ...  Adding the word /new/ to the sentence, combined with editor reformating,  modifies /two/ text lines where a single word modification was done in the text.
-#+begin_example
-This section presents the existing works that investigate new
-approaches to evaluate...
-#+end_example
+/Fowler, H. R., Aaron, J. E., & McArthur, M. (1992). The little, brown
+handbook. Pearson./
 
-Typography:
-   + For the French typography, read the [[https://catalogue.bnf.fr/ark:/12148/cb38887921n.public][Lexique des règles typographiques en usage à l'Imprimerie nationale]].
-     + French uses insecable spaces before many punctuations,
-       e.g., =?=, =!=, =:=, =;=, =»= (hence, also after =«=).
-       + For example: =«~Salut, la compagnie~!~»=
+/The Chicago Manual of Style, 17th edition (2017).  	University of Chicago Press./
 
-   + For the English typography and many other topics related to writing,
-     read the [[https://www.pearson.com/us/higher-education/product/Fowler-Little-Brown-Handbook-The-14th-Edition/9780134759722.html][Little, Brown Handbook]].
-     + English does /not/ use insecable spaces before punctuation
-       marks.
-       + For example: ="Hello, World!"=
+*** Don’t use adverbs
+
+Most of the time, adverbs do not contain useful information, and can
+be removed without changing the meaning of the text.
+In many cases, it is better is to think about a more expressive adjective or verb.
+
+If you /really/ need an adverb, think about it twice.
+
+*** Jargon consistency
+
+Check the consistent use of every term in the paper.
+You should use only one word for each use of the same meaning in the
+whole document.
+If you need two ore more words, make it clear to the reader that they
+mean different things, albeit close or related.
+
+*** Use a spell checker
+
+*** Use a grammar checker
+
+** Some frequent LaTeX mistakes
+
+*** Use of non-breaking spaces
+
+Add an non-breaking space (=~=) in front of most =\cite{...}=.  For
+example: =Warren~\cite{Warren1965} was the first to...=.
+
+** Compatibility with Version Control Systems
+
+*** Write each sentence /on a single text line/
+
+      + A long text line probably indicates that the sentence is too long
+        and needs to be written differently.
+      + It helps to keep track of word changes across revisions.
+
+*** Don't use your editor's reformatting tools
+
+Or this may introduce unwanted changes in the versioning history.
+
+For example, considering this short example:
+ #+begin_example
+ This section presents the existing works that investigate approaches
+ to evaluate...
+ #+end_example
+      ...  Adding the word /new/ to the sentence, combined with editor formatting,  modifies /two/ text lines where a single word modification was done in the text.
+ #+begin_example
+ This section presents the existing works that investigate new
+ approaches to evaluate...
+ #+end_example
+
+** Typography
+
+*** in French
+
+For the French typography, read the [[https://catalogue.bnf.fr/ark:/12148/cb38887921n.public][Lexique des règles typographiques en usage à l'Imprimerie nationale]].
+
+Non-breaking spaces (=~= in LaTeX) are required before many punctuations,
+        e.g., =?=, =!=, =:=, =;=, =»= (hence, also after =«=).
+        For example, you would write in LaTeX: =«~Salut, la compagnie~!~»=
+
+The =babel= package, if correctly configured, is usually able to
+manage the use of non-breaking spaces automatically for you, but YMMV.
+
+For LaTeX black-belts: =\,= inserts a /thinspace/, which is also
+non-breaking.  Mostly used for math notations.  LaTeX supports a plethora
+of different white spaces.
+
+*** in English
+
+For the English typography and many other topics related to writing,
+      read the [[https://www.pearson.com/us/higher-education/product/Fowler-Little-Brown-Handbook-The-14th-Edition/9780134759722.html][Little, Brown Handbook]].
+
+English does /not/ use non-breaking spaces before punctuation
+        marks.
+        For example, you would write in LaTeX: ="Hello, World!"=.
+
+In English, the white space following the full stop at the end of a
+sentence is longer than other spaces between words.  LaTeX
+automatically takes care of that for you.  Other spaces after a dot
+usually require a normal space, which is annotated =\ =.  For example:
+=e.g.\ =
+(even though some manuals of style require the use of a comma
+after "e.g." or "i.e.".
