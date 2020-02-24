@@ -1,53 +1,36 @@
-﻿---
-title: Suggestions for improving your LaTeX documents
+---
+title: Suggestions for improving scientific writings and the use of LaTeX
 ---
 
-** Writing style
-
-There are many good resources about writing style.
-My writings are probably not exemplary with regards to writing style, but I suggest here a few things that are not given enough care.
-
-I recommend these two excellent books, frequently re-edited and revised:
-
-/Fowler, H. R., Aaron, J. E., & McArthur, M. (1992). The little, brown
-handbook. Pearson./
-
-/The Chicago Manual of Style, 17th edition (2017).  	University of Chicago Press./
-
-*** Don’t use adverbs
-
-Most of the time, adverbs do not contain useful information, and can
-be removed without changing the meaning of the text.
-In many cases, it is better is to think about a more expressive adjective or verb.
-
-If you /really/ need an adverb, think about it twice.
-
-*** Jargon consistency
-
-Check the consistent use of every term in the paper.
-You should use only one word for each use of the same meaning in the
-whole document.
-If you need two ore more words, make it clear to the reader that they
-mean different things, albeit close or related.
-
-*** Use a spell checker
-
-*** Use a grammar checker
+In this page, I humbly share a summary of the /things/ that I
+frequently report to my co-authors.
+Many of those /things/ could be called /errors/, while some others may be considered as a matter of
+taste.
 
 ** Some frequent LaTeX mistakes
 
 *** Use of non-breaking spaces
 
-Add an non-breaking space (=~=) in front of most =\cite{...}=.  For
-example: =Warren~\cite{Warren1965} was the first to...=.
+Add an non-breaking space (=~=) in front of most =\cite{…}=,
+=\page{…}=, etc.
+For example:
+#+begin_example
+Warren~\cite{Warren1965} was the first to…
+
+See figure~\ref{fig:test} on page~\pageref{fig:test}.
+#+end_example
+
+Reference: https://en.wikibooks.org/wiki/LaTeX/Labels_and_Cross-referencing
 
 ** Compatibility with Version Control Systems
 
 *** Write each sentence /on a single text line/
 
-      + A long text line probably indicates that the sentence is too long
-        and needs to be written differently.
-      + It helps to keep track of word changes across revisions.
++ It helps to keep track of word changes across revisions.
++ A long text line probably indicates that the sentence is too long
+  and needs to be written differently.  The practice of using one text
+  line for each sentence helps identifying text structures that may
+  need some simplification.
 
 *** Don't use your editor's reformatting tools
 
@@ -58,11 +41,42 @@ For example, considering this short example:
  This section presents the existing works that investigate approaches
  to evaluate...
  #+end_example
-      ...  Adding the word /new/ to the sentence, combined with editor formatting,  modifies /two/ text lines where a single word modification was done in the text.
+      ...  Adding the word /new/ to the sentence, combined with editor
+      formatting,
+      modifies /two/ text lines where a single word was actually modified in the text.
  #+begin_example
  This section presents the existing works that investigate new
  approaches to evaluate...
  #+end_example
+
+The addition of one word, if combined with text reformatting, let's a
+VCS (e.g., git) report that /two/ text lines were modified:
+#+begin_example
+$ git diff
+- This section presents the existing works that investigate approaches
+- to evaluate...
++ This section presents the existing works that investigate new
++ approaches to evaluate...
+#+end_example
+
+If the sentence is kept in one single text line, git diff correcly
+reports a single change:
+#+begin_example
+- This section presents the existing works that investigate approaches to evaluate...
++ This section presents the existing works that investigate new approaches to evaluate...
+#+end_example
+
+Nota: =git diff= provides an option to highlight changed words instead
+of changed lines.
+The output is more readable with color output (not illustrated here).
+However, I suggest not to rely on this option of git, because all your
+co-authors may not be aware of this option,
+and they will probably not use the same git client.
+
+#+begin_example
+$ git diff --word-diff
+This section presents the existing works that investigate {+new+} approaches to evaluate...
+#+end_example
 
 ** Typography
 
@@ -97,3 +111,44 @@ usually require a normal space, which is annotated =\ =.  For example:
 =e.g.\ =
 (even though some manuals of style require the use of a comma
 after "e.g." or "i.e.".
+
+** Writing style
+
+There are many good resources about writing style.
+My writings are probably not exemplary with regards to writing style, but I suggest here a few things that are not given enough care.
+
+I recommend these two excellent books, frequently re-edited and revised:
+
+/Fowler, H. R., Aaron, J. E., & McArthur, M. (1992). The little, brown
+handbook. Pearson./
+
+/The Chicago Manual of Style, 17th edition (2017).  	University of Chicago Press./
+
+*** Don’t use adverbs
+
+Most of the time, adverbs do not contain useful information, and can
+be removed without changing the meaning of the text.
+In many cases, it is better is to think about a more expressive verb,
+or to write differently the sentence.
+
+If you /really/ need an adverb, think about it twice.
+
+Adjectives are likely to receive the same treatment.
+
+*** Jargon consistency
+
+Check the consistent use of every term in the paper.
+You should use only one word for each use of the same meaning in the
+whole document.
+If you need two ore more words, make it clear to the reader that they
+mean different things, albeit close or related.
+
+** Use a grammar checker
+
+Most LaTeX editors do not support grammar checking.
+Or maybe, most users of LaTeX editors do not use grammar checking.
+I don't know.
+
+** Use a spell checker
+
+Period.
