@@ -32,9 +32,16 @@ Reference: https://en.wikibooks.org/wiki/LaTeX/Labels_and_Cross-referencing
   line for each sentence helps identifying text structures that may
   need some simplification.
 
-*** Don't use your editor's reformatting tools
+*** Editor settings
 
-Or this may introduce unwanted changes in the versioning history.
+**** Don't use your editor's reformatting tools
+
+ See my point above about the use of single text lines for each sentence.
+
+ Many editors can automatically reformat long text lines in a nicely
+ formatted paragraph of text (in emacs, this is called word wrapping).
+ You should disable this feature when editing versioned documents,
+ because it may introduce unwanted changes in the versioning history.
 
 For example, considering this short example:
  #+begin_example
@@ -59,7 +66,7 @@ $ git diff
 + approaches to evaluate...
 #+end_example
 
-If the sentence is kept in one single text line, git diff correcly
+If the sentence is kept in one single text line, git diff correctly
 reports a single change:
 #+begin_example
 - This section presents the existing works that investigate approaches to evaluate...
@@ -78,13 +85,32 @@ $ git diff --word-diff
 This section presents the existing works that investigate {+new+} approaches to evaluate...
 #+end_example
 
+**** Delete trailing spaces
+
+It is a common practice to delete trailing spaces in versioned documents.
+Here's why.
+Say A commits changes in a file, with trailing spaces left.
+Later, B adds some changes, but B's editor automatically deletes trailing spaces.
+The version control tool will attribute extra changes to B only because of the deletion of trailing spaces!
+This will make the change look bigger than it is in reality, and the real modifications of the document will be difficult to track because of the noise added.
+
+Emacs can be configured as follows:
+#+begin_src elisp
+; show trailing white-spaces
+(setq-default show-trailing-whitespace t)
+; delete trailing spaces when saving the file
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
+#+end_src
+
+If you know how to configure [[https://www.tug.org/texworks/][TeXworks]] so that it automatically deletes trailing spaces, please let me know!
+
 ** Typography
 
 *** in French
 
 For the French typography, read the [[https://catalogue.bnf.fr/ark:/12148/cb38887921n.public][Lexique des règles typographiques en usage à l'Imprimerie nationale]].
 
-Non-breaking spaces (=~= in LaTeX) are required before many punctuations,
+Non-breaking spaces (=~= in LaTeX) are required before many punctuation marks,
         e.g., =?=, =!=, =:=, =;=, =»= (hence, also after =«=).
         For example, you would write in LaTeX: =«~Salut, la compagnie~!~»=
 
