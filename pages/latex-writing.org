@@ -1,3 +1,4 @@
+-*- ispell-dictionary: "english" -*-
 ---
 title: Suggestions for improving scientific writings and the use of LaTeX
 ---
