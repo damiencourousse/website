@@ -64,7 +64,8 @@ in fine, après ménage, il est peut-être possible de virer ce fichier css.
     CLOSED: [2019-05-04 sam. 15:10]
          - State "MAYBE"      from              [2019-05-04 sam. 15:10]
 
-https://alastairreid.github.io/activities/
+- https://alastairreid.github.io/activities/
+- http://mpelcat.org/
 
 ******** MAYBE sitemap.xml ne contient pas les refs vers les pages générées (e.g. via la fonction =create=)
     CLOSED: [2019-08-08 jeu. 17:30]
