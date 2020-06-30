@@ -131,12 +131,14 @@ English does /not/ use non-breaking spaces before punctuation
         For example, you would write in LaTeX: ="Hello, World!"=.
 
 In English, the white space following the full stop at the end of a
-sentence is longer than other spaces between words.  LaTeX
-automatically takes care of that for you.  Other spaces after a dot
-usually require a normal space, which is annotated =\ =.  For example:
-=e.g.\ =
-(even though some manuals of style require the use of a comma
-after "e.g." or "i.e.".
+sentence is longer than other spaces between words.
+LaTeX automatically takes care of that for you.
+Other situations where a dot is used usually require a normal space,
+which is annotated ='\  '= (without the surrounding quotation marks)
+in LaTeX to enforce the use of the space character.
+For example: ='e.g.\ '=
+(although some manuals of style require the use of a comma
+after 'e.g.' or 'i.e.').
 
 ** Writing style
 
