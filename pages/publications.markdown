@@ -19,6 +19,10 @@ csl: ieee.csl
 peer-reviewed papers
 ====================
 
+@CASES2020
+
+@ESORICS2020
+
 @NEWCAS2019
 
 @TACO2019
@@ -122,6 +126,9 @@ invited talks
 
 talks and posters
 =================
+
+
+@GDROndes2019
 
 @ADTC2018
 
