@@ -346,6 +346,10 @@ type Height = Int
 
 -- | resize an image with imagemagick's binary @convert@.
 --   Assuming the current Identifier is an image.
+--
+--   We use imagemagick because image metadata are not preserved by
+--   hakyll-images.  See
+--   https://github.com/LaurentRDC/hakyll-images/issues/5
 resizeImage :: Width -> Height -> Compiler (Item ())
 resizeImage w h = do
   -- MAYBE.  check if input is an image.
