@@ -15,6 +15,21 @@ subdirectory =_site=.
 make
 #+END_EXAMPLE
 
+To force a full rebuild:
+#+begin_example
+$ make rebuild
+#+end_example
+
+** watch
+
+The build rule =watch= loads the built static website in a local web
+server, and automatically rebuilds the target files when changes are
+detected in the source files.
+
+#+begin_example
+$ make watch
+#+end_example
+
 ** push the built website files
 
 The subdirectory =site= is a git submodule.  Its contents are synced
