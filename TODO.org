@@ -1,50 +1,22 @@
 * todos list
 
-******** TODO upgrage pandoc-citeproc -> citeproc
+******** MAYBE upgrage pandoc-citeproc -> citeproc
+         CLOSED: [2021-02-16 mar. 21:53]
     :PROPERTIES:
-         :CREATED:  [2021-02-16 mar. 21:22]
+    :CREATED:  [2021-02-16 mar. 21:53]
          :TRIGGER:  chain-find-next(TODO,todo-only)
          :END:
 
-test upgrade vers la LTS-12.26.
+    - State "MAYBE"      from "TODO"       [2021-02-16 mar. 21:53]
 
-Problème : les noms composés ne sont plus correctement traités dans
-les refs biblio.  voir par exemple :
-https://github.com/damiencourousse/damiencourousse.github.io/compare/a57e8734988b7a2cdb5a7c587b5cc9bac83e722d...b075d92f184573875f82d5ef7ddb3cd2cc87e1fd#diff-64c738efe55aa27cc15ad7a83e9bde4c7bf3b7de8bacd5f2aa5be33742289d64
-
-je suppose que le problème se trouve dans la mise à jour de
-pandoc-citeproc:
-
-pour lts-12.5:
-#+begin_example
-%  I  ~/s/damien.courousse.fr   *+…  cat stack.yaml |rg lts                 mar. 16 févr. 2021 21:25:26 CET
-# Specifies the GHC version and set of packages available (e.g., lts-3.5, nightly-2015-09-21, ghc-7.10.2)
-resolver: lts-12.5
- %  I  ~/s/damien.courousse.fr   *+…  stack ls dependencies | rg pandoc      mar. 16 févr. 2021 21:25:31 CET
-pandoc 2.2.1
-pandoc-citeproc 0.14.3.1
-pandoc-types 1.17.5.1
-#+end_example
-
-pour lts-12.26:
-#+begin_example
-HEAD est maintenant sur 54750ff site update
- %  I  ~/s/damien.courousse.fr  ➦ 54750ff *…  cat stack.yaml |rg lts          mar. 16 févr. 2021 21:25:59 CET
-# Specifies the GHC version and set of packages available (e.g., lts-3.5, nightly-2015-09-21, ghc-7.10.2)
-resolver: lts-12.26
- %  I  ~/s/damien.courousse.fr  ➦ 54750ff *…  stack ls dependencies | rg pandoc
-pandoc 2.2.1
-pandoc-citeproc 0.14.8.1
-pandoc-types 1.17.5.4
-#+end_example
-
-Par ailleurs, =pandoc-citeproc= n'est plus inclus dans stackage à
-partir de la LTS-17.   =pandoc-citeproc= est deprecated au profit de
-=citeproc=.
+=pandoc-citeproc= n'est plus inclus dans stackage à partir de la
+LTS-17.  =pandoc-citeproc= est deprecated au profit de =citeproc=.
+https://www.stackage.org/package/pandoc-citeproc
 
 ******** TODO bio synthétique et efficace
     :PROPERTIES:
          :TRIGGER:  chain-find-next(TODO,todo-only)
+         :CREATED:  [2021-02-16 mar. 21:53]
          :END:
          - State "MAYBE"      from              [2019-05-16 jeu. 22:02]
 
