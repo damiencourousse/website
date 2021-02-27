@@ -11,6 +11,9 @@ packages:
 extra-deps:
 - pandoc-citeproc-0.15
 
+# allow the use of pandoc-citeproc-0.15 with lts-12.26
+allow-newer: true
+
 # Override default flag values for local packages and extra-deps
 flags: {}
 
