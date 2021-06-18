@@ -1,7 +1,13 @@
 * todos list
 
+******** TODO Make: être certain que tout est commit avant de =deploy=
+    :PROPERTIES:
+         :CREATED:  [2021-06-18 ven. 22:19]
+         :TRIGGER:  chain-find-next(TODO,todo-only)
+         :END:
+
 ******** MAYBE upgrage pandoc-citeproc -> citeproc
-         CLOSED: [2021-02-16 mar. 21:53]
+    CLOSED: [2021-02-16 mar. 21:53]
     :PROPERTIES:
     :CREATED:  [2021-02-16 mar. 21:53]
          :TRIGGER:  chain-find-next(TODO,todo-only)
@@ -85,6 +91,18 @@ in fine, après ménage, il est peut-être possible de virer ce fichier css.
     CLOSED: [2019-08-08 jeu. 17:30]
 
          - State "MAYBE"      from              [2019-08-08 jeu. 17:30]
+
+******** MAYBE regarder =ema=.  un générateur moderne de sites web statiques
+    CLOSED: [2021-04-29 jeu. 21:56]
+    :PROPERTIES:
+         :CREATED:  [2021-04-29 jeu. 21:56]
+         :END:
+
+         - State "MAYBE"      from              [2021-04-29 jeu. 21:56]
+
+         https://notes.srid.ca/ema-announce
+
+         https://ema.srid.ca/
 
 ** gallerie
 
