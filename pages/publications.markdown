@@ -136,6 +136,8 @@ talks and posters
 
 @PHISIC2018
 
+@TrevisanJostApproxRISCapproximatecomputing2018
+
 @Belleville2017:CPSEd:talk
 
 @DAC2017
