@@ -183,7 +183,7 @@ patents
 
 @brevet:kMSD2018
 
-@Courousse2017:brevet
+@BTHCODE2017:brevet
 
 @BTCFID2017:brevet
 
