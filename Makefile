@@ -2,9 +2,9 @@ PDFS := $(wildcard mespubli/pdf/*.pdf)
 LINKS := $(patsubst mespubli/%,%,$(PDFS))
 
 .PHONY: build rebuild watch
-build: stack_build
+build: stack_build update_pdf_links
 	stack exec site -- $@
-rebuild: stack_build
+rebuild: stack_build update_pdf_links
 	stack exec site -- $@
 watch: stack_build
 	stack exec site -- $@
